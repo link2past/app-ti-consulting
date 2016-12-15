@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ContenidoActivity" />
-        <activity android:name=".NavigationActivity"></activity>
+        <activity android:name=".NavigationActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

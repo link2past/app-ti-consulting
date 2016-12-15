@@ -8,6 +8,7 @@ public class Token {
     private int _idToken;
     private String _idUsuario;
     private String _token;
+    private Usuario _usuario;
     //private Date _fechaCreacion;
     //private Date _fechaVencimiento;
 
@@ -33,6 +34,14 @@ public class Token {
 
     public void set_token(String _token) {
         this._token = _token;
+    }
+
+    public Usuario get_usuario() {
+        return _usuario;
+    }
+
+    public void set_usuario(Usuario _usuario) {
+        this._usuario = _usuario;
     }
 
     /*public Date get_fechaCreacion() {

@@ -65,7 +65,8 @@ public class MainActivity extends BaseActivity {
                     if (oToken != null) {
                         //Toast.makeText(MainActivity.this, oToken.get_token(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, NavigationActivity.class);
-                        //intent.putExtra("nombreusuario",oUsuario.getNombre() );
+                        intent.putExtra("nombreusuario",oToken.get_usuario().get_nombre() );
+                        intent.putExtra("tipousuario", oToken.get_usuario().get_tipoUsuario().get_descripcion());
                         startActivity(intent);
                         bLoginCorrecto = true;
 
