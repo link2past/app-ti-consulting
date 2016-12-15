@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">GesTI</string>
+    <string name="idusuario">Id de Usuario</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="login">Ingresar al Sistema</string>
+    <string name="bienvenida">Bienvenido (a) </string>
+    <string name="tipousuario">Tipo de Usuario</string>
+    <string name="navTicket">Tickets</string>
+    <string name="navLiquidacion">Liquidación</string>
+    <string name="navPerfil">Perfil</string>
+    <string name="navCerrarSesion">Cerrar Sesión</string>
+</resources>
