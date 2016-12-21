@@ -1,13 +1,32 @@
 package com.oalvarez.appticonsulting;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.widget.FrameLayout;
+
+import com.oalvarez.appticonsulting.adapter.ViewPagerAdapter;
+import com.oalvarez.appticonsulting.fragments.TicketFragment;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ContenidoActivity extends BaseActivity {
+
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
+    @BindView(R.id.content_frame)
+    FrameLayout contentFrame;
+
+    private ViewPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contenido);
+        ButterKnife.bind(this);
+
+//        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+//        adapter.agregarFragmento(new TicketFragment());
+//        viewPager.setAdapter(adapter);
     }
 }
