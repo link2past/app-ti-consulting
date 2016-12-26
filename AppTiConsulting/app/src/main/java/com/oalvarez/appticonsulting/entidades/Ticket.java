@@ -14,7 +14,7 @@ public class Ticket {
     private Cliente _cliente;
     private int _idSede;
     private SedeCliente _sede;
-    private String _fechaTicket;
+    private Date _fechaTicket;
     private int _idCategoriaProblema;
     private CategoriaProblema _categoriaProblema;
     private int _idNivelUrgencia;
@@ -81,11 +81,11 @@ public class Ticket {
         this._sede = _sede;
     }
 
-    public String get_fechaTicket() {
+    public Date get_fechaTicket() {
         return _fechaTicket;
     }
 
-    public void set_fechaTicket(String _fechaTicket) {
+    public void set_fechaTicket(Date _fechaTicket) {
         this._fechaTicket = _fechaTicket;
     }
 

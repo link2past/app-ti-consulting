@@ -18,4 +18,8 @@
     <string name="fechaticket">Fecha Ticket</string>
     <string name="cliente">Cliente</string>
     <string name="sede">Sede de Cliente</string>
+    <string name="ticketsasignados">Tickets Asignados</string>
+    <string name="liquidacion">Liquidación de Gastos</string>
+
+    <string name="api_map">AIzaSyAHQ1gxeb00CEwpk7JMKHaJYYVCAHCbwq4</string>
 </resources>

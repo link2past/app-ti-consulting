@@ -5,18 +5,22 @@
 
         <item
             android:id="@+id/navPerfil"
+            android:icon="@drawable/ic_account_circle_black_48dp"
             android:title="@string/navPerfil" />
 
         <item
             android:id="@+id/navTickets"
+            android:icon="@drawable/ic_assignment_black_48dp"
             android:title="@string/navTicket"/>
 
         <item
             android:id="@+id/navLiquidacion"
+            android:icon="@drawable/ic_account_balance_wallet_black_48dp"
             android:title="@string/navLiquidacion" />
     </group>
 
     <item
         android:id="@+id/navCerrarSesion"
+        android:icon="@drawable/ic_exit_to_app_black_48dp"
         android:title="@string/navCerrarSesion" />
 </menu>

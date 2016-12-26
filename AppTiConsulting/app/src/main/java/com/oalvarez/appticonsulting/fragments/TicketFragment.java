@@ -9,10 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.oalvarez.appticonsulting.R;
 import com.oalvarez.appticonsulting.adapter.TicketAdapter;
 import com.oalvarez.appticonsulting.entidades.Ticket;
+import com.oalvarez.appticonsulting.events.ClickListener;
+import com.oalvarez.appticonsulting.events.RecyclerTouchListener;
 import com.oalvarez.appticonsulting.servicios.HelperWs;
 import com.oalvarez.appticonsulting.servicios.TicketsApiWs;
 
@@ -51,33 +54,66 @@ public class TicketFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ticket, container, false);
         ButterKnife.bind(this, view);
 
-        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration().create(TicketsApiWs.class);
-        String sUsuario = "AMENDIGURE";
-        Call<ArrayList<Ticket>> respuesta = ticketsApiWs.ConsultarTicketsAsignados(sUsuario);
+        Bundle bundle = this.getArguments();
+        if (bundle != null){
 
-        respuesta.enqueue(new Callback<ArrayList<Ticket>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Ticket>> call, Response<ArrayList<Ticket>> response) {
-                listaTickets = response.body();
+            String sIdUsuario = bundle.getString("idusuario");
 
-                if (listaTickets != null){
-                    adapter = new TicketAdapter(listaTickets);
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                    rvTicketsAsignados.setLayoutManager(layoutManager);
-                    rvTicketsAsignados.setAdapter(adapter);
+            TicketsApiWs ticketsApiWs = HelperWs.getConfiguration().create(TicketsApiWs.class);
+            String sUsuario = sIdUsuario;
+            Call<ArrayList<Ticket>> respuesta = ticketsApiWs.ConsultarTicketsAsignados(sUsuario);
+
+            respuesta.enqueue(new Callback<ArrayList<Ticket>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Ticket>> call, Response<ArrayList<Ticket>> response) {
+                    listaTickets = response.body();
+
+                    if (listaTickets != null){
+                        adapter = new TicketAdapter(listaTickets);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                        rvTicketsAsignados.setLayoutManager(layoutManager);
+                        rvTicketsAsignados.setAdapter(adapter);
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ArrayList<Ticket>> call, Throwable t) {
+                @Override
+                public void onFailure(Call<ArrayList<Ticket>> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+
+        }
+
 
         return view;
     }
 
     @OnClick(R.id.fabActualizar)
     public void onClick() {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        rvTicketsAsignados.addOnItemTouchListener(new RecyclerTouchListener(
+                getActivity(),
+                rvTicketsAsignados,
+                new ClickListener() {
+                    @Override
+                    public void onClick(View view, int position) {
+                        Ticket ticket = new Ticket();
+                        ticket = listaTickets.get(position);
+
+                        Toast.makeText(getActivity(), "Ticket: " + ticket.get_titulo(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onLongClick(View view, int position) {
+
+                    }
+                }
+        ));
+
     }
 }

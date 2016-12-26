@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.oalvarez.appticonsulting.R;
 import com.oalvarez.appticonsulting.entidades.Ticket;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -57,7 +58,11 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketHold
         Ticket oTicket = listaTickets.get(position);
         holder.tvNroTicket.setText( String.valueOf(oTicket.get_nroTicket()) );
         holder.tvEstadoTicket.setText( oTicket.get_estadoTicket().get_descripcion() );
-        //holder.tvFechaTicket.setText( oTicket.get_fechaTicket().toString());
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String sFecha = simpleDateFormat.format(oTicket.get_fechaTicket());
+        holder.tvFechaTicket.setText( sFecha);
+
         holder.tvClienteTicket.setText(oTicket.get_cliente().get_razonSocial());
         holder.tvSedeTicket.setText(oTicket.get_sede().get_nombre());
     }

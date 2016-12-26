@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.oalvarez.appticonsulting.fragments.LiquidacionFragment;
 import com.oalvarez.appticonsulting.fragments.TicketFragment;
 
 import butterknife.BindView;
@@ -23,6 +24,8 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    String sIdUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,9 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
             //setSupportActionBar(toolbar);
 
             Bundle bundle = getIntent().getExtras();
-            if (bundle.getString("nombreusuario") != null && bundle.getString("tipousuario") != null) {
+            if (bundle.getString("idusuario") != null && bundle.getString("nombreusuario") != null && bundle.getString("tipousuario") != null) {
+
+                sIdUsuario = bundle.getString("idusuario");
 
                 DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
                 ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -53,10 +58,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
                 TextView tvTipoUsuario = (TextView)header.findViewById(R.id.tvTipoUsuario);
                 tvTipoUsuario.setText(bundle.getString("tipousuario"));
 
-
                 displaySelectedScreen(R.id.navTickets);
-
-
             }
 
 
@@ -76,9 +78,17 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         switch (itemId) {
             case R.id.navTickets:
                 fragment = new TicketFragment();
+                Bundle bundleFragment = new Bundle();
+                bundleFragment.putString("idusuario", sIdUsuario);
+                fragment.setArguments(bundleFragment);
+                toolbar.setTitle(R.string.ticketsasignados);
                 break;
             case R.id.navPerfil:
                 //fragment = new Menu2();
+                break;
+            case R.id.navLiquidacion:
+                fragment = new LiquidacionFragment();
+                toolbar.setTitle(R.string.liquidacion);
                 break;
 
         }
@@ -104,15 +114,29 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         }
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        return false;
+        displaySelectedScreen(item.getItemId());
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.main, menu);
+        //getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
         return true;
     }
 }

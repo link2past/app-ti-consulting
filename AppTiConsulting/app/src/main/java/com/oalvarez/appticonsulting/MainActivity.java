@@ -2,16 +2,18 @@ package com.oalvarez.appticonsulting;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.oalvarez.appticonsulting.entidades.*;
-import com.oalvarez.appticonsulting.servicios.*;
-import com.oalvarez.appticonsulting.util.*;
+import com.oalvarez.appticonsulting.entidades.Token;
+import com.oalvarez.appticonsulting.entidades.Usuario;
+import com.oalvarez.appticonsulting.servicios.HelperWs;
+import com.oalvarez.appticonsulting.servicios.TicketsApiWs;
+import com.oalvarez.appticonsulting.util.Encrypt;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +30,8 @@ public class MainActivity extends BaseActivity {
     EditText etContrasena;
     @BindView(R.id.btnLogin)
     Button btnLogin;
+    @BindView(R.id.pbLogin)
+    ProgressBar pbLogin;
 
     private Boolean bLoginCorrecto = false;
 
@@ -43,11 +47,14 @@ public class MainActivity extends BaseActivity {
 
 
         String sUsuario = etUsuario.getText().toString().trim();
-        String sContrasena = new Encrypt().encrypt(etContrasena.getText().toString(),"!T1C0NSULT1NG2016!").trim();
+        String sContrasena = new Encrypt().encrypt(etContrasena.getText().toString(), "!T1C0NSULT1NG2016!").trim();
 
         Usuario oUsuario = new Usuario();
         oUsuario.set_usuario(sUsuario);
         oUsuario.set_contraseña(sContrasena);
+
+        pbLogin.setIndeterminate(true);
+        pbLogin.setVisibility(View.VISIBLE);
 
         Gson gsonParse = new GsonBuilder().disableHtmlEscaping().create();
         String sJson = gsonParse.toJson(oUsuario);
@@ -61,18 +68,19 @@ public class MainActivity extends BaseActivity {
             public void onResponse(Call<Token> call, Response<Token> response) {
                 Token oToken = response.body();
 
-                try{
+                try {
                     if (oToken != null) {
                         //Toast.makeText(MainActivity.this, oToken.get_token(), Toast.LENGTH_SHORT).show();
+                        pbLogin.setVisibility(View.INVISIBLE);
                         Intent intent = new Intent(MainActivity.this, NavigationActivity.class);
-                        intent.putExtra("nombreusuario",oToken.get_usuario().get_nombre() );
+                        intent.putExtra("idusuario", oToken.get_idUsuario());
+                        intent.putExtra("nombreusuario", oToken.get_usuario().get_nombre());
                         intent.putExtra("tipousuario", oToken.get_usuario().get_tipoUsuario().get_descripcion());
                         startActivity(intent);
                         bLoginCorrecto = true;
 
                     }
-                }
-                catch (Exception ex){
+                } catch (Exception ex) {
 
                 }
             }
