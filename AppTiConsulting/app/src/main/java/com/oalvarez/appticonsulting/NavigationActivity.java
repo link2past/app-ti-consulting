@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.oalvarez.appticonsulting.fragments.LiquidacionFragment;
+import com.oalvarez.appticonsulting.fragments.TicketDetalleFragment;
 import com.oalvarez.appticonsulting.fragments.TicketFragment;
 
 import butterknife.BindView;
@@ -85,6 +86,8 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
                 break;
             case R.id.navPerfil:
                 //fragment = new Menu2();
+                fragment = new TicketDetalleFragment();
+                toolbar.setTitle("Detalle de Tickets");
                 break;
             case R.id.navLiquidacion:
                 fragment = new LiquidacionFragment();
@@ -96,7 +99,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         //replacing the fragment
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
+            ft.replace(R.id.content_frame, fragment).addToBackStack("fragment");
             ft.commit();
         }
 

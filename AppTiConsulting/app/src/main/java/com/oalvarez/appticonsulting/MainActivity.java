@@ -1,11 +1,14 @@
 package com.oalvarez.appticonsulting;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -53,6 +56,10 @@ public class MainActivity extends BaseActivity {
         oUsuario.set_usuario(sUsuario);
         oUsuario.set_contraseña(sContrasena);
 
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null :
+                getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS );
+
         pbLogin.setIndeterminate(true);
         pbLogin.setVisibility(View.VISIBLE);
 
@@ -79,6 +86,11 @@ public class MainActivity extends BaseActivity {
                         startActivity(intent);
                         bLoginCorrecto = true;
 
+                    }
+                    else{
+                        pbLogin.setVisibility(View.INVISIBLE);
+                        Toast.makeText(MainActivity.this, "Usuario o contraseña incorrecta, intente nuevamente.",
+                                      Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception ex) {
 

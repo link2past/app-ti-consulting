@@ -22,4 +22,5 @@
     <string name="liquidacion">Liquidación de Gastos</string>
 
     <string name="api_map">AIzaSyAHQ1gxeb00CEwpk7JMKHaJYYVCAHCbwq4</string>
+    <string name="tituloticket">Título</string>
 </resources>
