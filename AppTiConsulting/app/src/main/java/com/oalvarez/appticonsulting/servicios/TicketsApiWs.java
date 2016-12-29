@@ -21,7 +21,9 @@ public interface TicketsApiWs {
     @POST("usuario")
     Call<Token> Login(@Body Usuario usuario);
 
-    @GET("ticket/{id}")
-    Call<ArrayList<Ticket>> ConsultarTicketsAsignados(@Path("id") String sIdUsuarioAsignado);
+    @GET("ticket/{accion}/{id}")
+    Call<ArrayList<Ticket>> ConsultarTicketsAsignados(@Path("accion") String sAccion,  @Path("id") String sIdUsuarioAsignado);
 
+    @GET("ticket/{id}")
+    Call<Ticket> ConsultarTicket(@Path("id") String sIdUsuarioAsignado);
 }

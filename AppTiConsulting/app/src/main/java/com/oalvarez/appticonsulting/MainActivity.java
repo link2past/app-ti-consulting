@@ -43,6 +43,8 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        //throw new RuntimeException("Error de Prueba");
     }
 
     @OnClick(R.id.btnLogin)
