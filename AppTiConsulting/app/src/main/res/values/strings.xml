@@ -10,6 +10,9 @@
     <string name="navPerfil">Perfil</string>
     <string name="navCerrarSesion">Cerrar Sesión</string>
 
+    <string name="mensajeLoginNoUsuario">Debe ingresar su Id de Usuario</string>
+    <string name="mensajeLoginNoContr">Debe ingresar su contraseña</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nroticket">Nro. Ticket</string>
@@ -23,4 +26,5 @@
 
     <string name="api_map">AIzaSyAHQ1gxeb00CEwpk7JMKHaJYYVCAHCbwq4</string>
     <string name="tituloticket">Título</string>
+    <string name="detalleticket">Detalle</string>
 </resources>

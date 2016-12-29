@@ -3,6 +3,7 @@ package com.oalvarez.appticonsulting;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -35,6 +36,10 @@ public class MainActivity extends BaseActivity {
     Button btnLogin;
     @BindView(R.id.pbLogin)
     ProgressBar pbLogin;
+    @BindView(R.id.tilUsuario)
+    TextInputLayout tilUsuario;
+    @BindView(R.id.tilContrasena)
+    TextInputLayout tilContrasena;
 
     private Boolean bLoginCorrecto = false;
 
@@ -50,6 +55,23 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.btnLogin)
     public void onClick() {
 
+        if (etUsuario.getText().toString().trim().equals("") || etUsuario.getText() == null) {
+            tilUsuario.setError(getString(R.string.mensajeLoginNoUsuario));
+            etUsuario.requestFocus();
+            return;
+        }
+        else{
+            tilUsuario.setError(null);
+        }
+
+        if (etContrasena.getText().toString().trim().equals("") || etContrasena.getText() == null) {
+            tilContrasena.setError(getString(R.string.mensajeLoginNoContr));
+            etContrasena.requestFocus();
+            return;
+        }
+        else{
+            tilContrasena.setError(null);
+        }
 
         String sUsuario = etUsuario.getText().toString().trim();
         String sContrasena = new Encrypt().encrypt(etContrasena.getText().toString(), "!T1C0NSULT1NG2016!").trim();
@@ -58,9 +80,9 @@ public class MainActivity extends BaseActivity {
         oUsuario.set_usuario(sUsuario);
         oUsuario.set_contraseña(sContrasena);
 
-        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null :
-                getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS );
+                getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
         pbLogin.setIndeterminate(true);
         pbLogin.setVisibility(View.VISIBLE);
@@ -88,11 +110,10 @@ public class MainActivity extends BaseActivity {
                         startActivity(intent);
                         bLoginCorrecto = true;
 
-                    }
-                    else{
+                    } else {
                         pbLogin.setVisibility(View.INVISIBLE);
                         Toast.makeText(MainActivity.this, "Usuario o contraseña incorrecta, intente nuevamente.",
-                                      Toast.LENGTH_SHORT).show();
+                                Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception ex) {
 

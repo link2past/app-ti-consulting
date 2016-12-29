@@ -7,70 +7,68 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="5dp"
         android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/nroticket"
-            android:textSize="14dp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/tvNroTicket"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/nroticket"
-            android:textSize="14dp"
-            />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/estadoticket"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            />
-
-    </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="5dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:text="@string/cliente"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                />
+                android:layout_weight="0.5"
+                android:text="@string/nroticket"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/tvNroTicket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/nroticket"
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="14dp"
-                android:id="@+id/tvClienteTicket"
-                android:text="@string/cliente"
-                />
+                android:layout_weight="0.5"
+                android:text="@string/estadoticket"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="@string/cliente"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvClienteTicket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cliente"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -78,33 +76,54 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:text="@string/sede"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
 
             <TextView
+                android:id="@+id/tvSedeTicket"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="14dp"
-                android:id="@+id/tvSedeTicket"
                 android:text="@string/sede"
-                />
+                android:textSize="18sp" />
         </LinearLayout>
 
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapSede"
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="120dp">
 
         </com.google.android.gms.maps.MapView>
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="@string/fechaticket"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvFechaTicket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/fechaticket"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -112,19 +131,41 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:text="@string/tituloticket"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
+
+            <TextView
+                android:id="@+id/tvTituloTicket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tituloticket"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="@string/detalleticket"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tvDetalleTicket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="14dp"
-                android:id="@+id/tvTituloTicket"
-                android:text="@string/tituloticket"
-                />
+                android:text="@string/detalleticket"
+                android:textSize="18sp" />
         </LinearLayout>
 
     </LinearLayout>

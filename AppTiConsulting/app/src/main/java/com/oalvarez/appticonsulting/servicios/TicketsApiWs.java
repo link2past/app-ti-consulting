@@ -25,5 +25,5 @@ public interface TicketsApiWs {
     Call<ArrayList<Ticket>> ConsultarTicketsAsignados(@Path("accion") String sAccion,  @Path("id") String sIdUsuarioAsignado);
 
     @GET("ticket/{id}")
-    Call<Ticket> ConsultarTicket(@Path("id") String sIdUsuarioAsignado);
+    Call<Ticket> ConsultarTicket(@Path("id") int id);
 }
