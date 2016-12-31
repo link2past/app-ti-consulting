@@ -2,18 +2,18 @@ package com.oalvarez.appticonsulting.fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.oalvarez.appticonsulting.R;
@@ -21,7 +21,6 @@ import com.oalvarez.appticonsulting.entidades.Ticket;
 import com.oalvarez.appticonsulting.servicios.HelperWs;
 import com.oalvarez.appticonsulting.servicios.TicketsApiWs;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import butterknife.BindView;
@@ -39,18 +38,34 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
     @BindView(R.id.mapSede)
     MapView mapSede;
 
-    @BindView(R.id.tvNroTicket)
-    TextView tvNroTicket;
-    @BindView(R.id.tvClienteTicket)
-    TextView tvClienteTicket;
-    @BindView(R.id.tvSedeTicket)
-    TextView tvSedeTicket;
-    @BindView(R.id.tvTituloTicket)
-    TextView tvTituloTicket;
-    @BindView(R.id.tvFechaTicket)
-    TextView tvFechaTicket;
-    @BindView(R.id.tvDetalleTicket)
-    TextView tvDetalleTicket;
+    @BindView(R.id.etNroTicket)
+    EditText etNroTicket;
+    @BindView(R.id.etEstadoTicket)
+    EditText etEstadoTicket;
+    @BindView(R.id.tilNroTicket)
+    TextInputLayout tilNroTicket;
+    @BindView(R.id.tilEstadoTicket)
+    TextInputLayout tilEstadoTicket;
+    @BindView(R.id.etClienteTicket)
+    EditText etClienteTicket;
+    @BindView(R.id.tilClienteTicket)
+    TextInputLayout tilClienteTicket;
+    @BindView(R.id.etSedeTicket)
+    EditText etSedeTicket;
+    @BindView(R.id.tilSedeTicket)
+    TextInputLayout tilSedeTicket;
+    @BindView(R.id.etFechaTicket)
+    EditText etFechaTicket;
+    @BindView(R.id.tilFechaTicket)
+    TextInputLayout tilFechaTicket;
+    @BindView(R.id.etTituloTicket)
+    EditText etTituloTicket;
+    @BindView(R.id.tilTituloTicket)
+    TextInputLayout tilTituloTicket;
+    @BindView(R.id.etDetalleTicket)
+    EditText etDetalleTicket;
+    @BindView(R.id.tilDetalleTicket)
+    TextInputLayout tilDetalleTicket;
 
     private Ticket oTicket;
     private Double nLatitud;
@@ -69,15 +84,24 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
         View view = inflater.inflate(R.layout.fragment_ticket_detalle, container, false);
         ButterKnife.bind(this, view);
 
-
         final Bundle bundle = this.getArguments();
+
+        mapSede.onCreate(savedInstanceState);
+        mapSede.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                //googleMap.setMyLocationEnabled(true);
+                gMap = googleMap;
+                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            }
+        });
+
         if (bundle != null) {
             int nroTicket = bundle.getInt("nroticket");
-            tvNroTicket.setText(String.valueOf(nroTicket));
+            etNroTicket.setText(String.valueOf(nroTicket));
 
             TicketsApiWs ticketsApiWs = HelperWs.getConfiguration().create(TicketsApiWs.class);
             Call<Ticket> respuesta = ticketsApiWs.ConsultarTicket(nroTicket);
-
 
             respuesta.enqueue(new Callback<Ticket>() {
                 @Override
@@ -86,21 +110,32 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
 
                     if (oTicket != null) {
 
-                        tvNroTicket.setText(String.valueOf(oTicket.get_nroTicket()));
-                        tvClienteTicket.setText(oTicket.get_cliente().get_razonSocial());
-                        tvSedeTicket.setText(oTicket.get_sede().get_nombre());
-                        tvTituloTicket.setText(oTicket.get_titulo());
+                        etNroTicket.setText(String.valueOf(oTicket.get_nroTicket()));
+
+                        etEstadoTicket.setText(oTicket.get_estadoTicket().get_descripcion());
+                        etClienteTicket.setText(oTicket.get_cliente().get_razonSocial());
+                        etSedeTicket.setText(oTicket.get_sede().get_nombre());
+                        etTituloTicket.setText(oTicket.get_titulo());
 
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         String sFecha = simpleDateFormat.format(oTicket.get_fechaTicket());
-                        tvFechaTicket.setText(sFecha);
+                        etFechaTicket.setText(sFecha);
 
-                        tvDetalleTicket.setText(oTicket.get_detalle());
+                        etDetalleTicket.setText(oTicket.get_detalle());
 
                         nLatitud = Double.parseDouble(oTicket.get_sede().get_latitud());
                         nLongitud = Double.parseDouble(oTicket.get_sede().get_longitud());
 
-                        
+                        gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
+                        gMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(nLatitud, nLongitud))
+                                .title(oTicket.get_cliente().get_razonSocial())
+                                .snippet(oTicket.get_sede().get_nombre())
+                        );
+
+                        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new
+                                LatLng(nLatitud, nLongitud), 17));
 
                     }
                 }
@@ -112,35 +147,33 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
             });
         }
 
-        //if (oTicket != null) {
+        desactivarCampos();
 
-            mapSede.onCreate(savedInstanceState);
-            mapSede.getMapAsync(new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(GoogleMap googleMap) {
-                    //googleMap.setMyLocationEnabled(true);
-                    googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                    //if (oTicket != null){
-                        nLatitud = -16.395188;
-                        nLongitud = -71.548212;
-
-                        googleMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(nLatitud, nLongitud))
-//                                .title(oTicket.get_cliente().get_razonSocial())
-//                                .snippet(oTicket.get_sede().get_nombre())
-                        );
-
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new
-                                LatLng(nLatitud, nLongitud), 17));
-                    //}
-
-                }
-            });
-
-        //}
         return view;
     }
 
+    private void desactivarCampos() {
+        etNroTicket.setFocusable(false);
+        etNroTicket.setClickable(false);
+
+        etEstadoTicket.setFocusable(false);
+        etEstadoTicket.setClickable(false);
+
+        etClienteTicket.setFocusable(false);
+        etClienteTicket.setClickable(false);
+
+        etSedeTicket.setFocusable(false);
+        etSedeTicket.setClickable(false);
+
+        etFechaTicket.setFocusable(false);
+        etFechaTicket.setClickable(false);
+
+        etTituloTicket.setFocusable(false);
+        etTituloTicket.setClickable(false);
+
+        etDetalleTicket.setFocusable(false);
+        etDetalleTicket.setClickable(false);
+    }
 
     @Override
     public void onResume() {
