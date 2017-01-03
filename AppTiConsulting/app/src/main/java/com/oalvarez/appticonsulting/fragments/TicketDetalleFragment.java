@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -245,11 +246,28 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
         ticket.set_solucion(etSolucionTicket.getText().toString());
         ticket.set_observaciones("");
         ticket.set_ordenServicio("");
-        ticket.set_usuarioAsignado(oTicket.get_idUsuarioAsignado());
+        ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
 
-        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String sJson = gson.toJson(ticket);
-        etSolucionTicket.setText(sJson);
-        Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
+        //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        //String sJson = gson.toJson(ticket);
+        //etSolucionTicket.setText(sJson);
+        //Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
+
+        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration().create(TicketsApiWs.class);
+        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
+
+        respuesta.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code()==200){
+                    Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }

@@ -4,6 +4,7 @@ import com.oalvarez.appticonsulting.entidades.*;
 
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -28,6 +29,6 @@ public interface TicketsApiWs {
     Call<Ticket> ConsultarTicket(@Path("id") int id);
 
     @Headers({"Accept: application/json", "Content-Type: application/json"})
-    @POST("usuario")
-    Call<Ticket> AtenderTicket(@Body Ticket oTicket);
+    @POST("ticket")
+    Call<ResponseBody> AtenderTicket(@Body Ticket oTicket);
 }
