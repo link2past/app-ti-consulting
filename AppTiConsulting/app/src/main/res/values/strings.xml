@@ -27,4 +27,5 @@
     <string name="api_map">AIzaSyAHQ1gxeb00CEwpk7JMKHaJYYVCAHCbwq4</string>
     <string name="tituloticket">Título</string>
     <string name="detalleticket">Detalle</string>
+    <string name="solucionticket">Solución</string>
 </resources>

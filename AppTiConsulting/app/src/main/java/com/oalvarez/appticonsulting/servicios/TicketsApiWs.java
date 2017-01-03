@@ -26,4 +26,8 @@ public interface TicketsApiWs {
 
     @GET("ticket/{id}")
     Call<Ticket> ConsultarTicket(@Path("id") int id);
+
+    @Headers({"Accept: application/json", "Content-Type: application/json"})
+    @POST("usuario")
+    Call<Ticket> AtenderTicket(@Body Ticket oTicket);
 }

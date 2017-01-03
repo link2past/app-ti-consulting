@@ -2,6 +2,7 @@ package com.oalvarez.appticonsulting.fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,6 +18,9 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.oalvarez.appticonsulting.MainActivity;
 import com.oalvarez.appticonsulting.R;
 import com.oalvarez.appticonsulting.entidades.Ticket;
 import com.oalvarez.appticonsulting.servicios.HelperWs;
@@ -25,6 +30,7 @@ import java.text.SimpleDateFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,6 +72,12 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
     EditText etDetalleTicket;
     @BindView(R.id.tilDetalleTicket)
     TextInputLayout tilDetalleTicket;
+    @BindView(R.id.etSolucionTicket)
+    EditText etSolucionTicket;
+    @BindView(R.id.tilSolucionTicket)
+    TextInputLayout tilSolucionTicket;
+    @BindView(R.id.fabTicket)
+    FloatingActionButton fabTicket;
 
     private Ticket oTicket;
     private Double nLatitud;
@@ -136,7 +148,6 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
 
                         gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new
                                 LatLng(nLatitud, nLongitud), 17));
-
                     }
                 }
 
@@ -225,4 +236,20 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
 
     }
 
+    @OnClick(R.id.fabTicket)
+    public void onClick() {
+//        Toast.makeText(getActivity(), "FAB",
+//                Toast.LENGTH_SHORT).show();
+        Ticket ticket = new Ticket();
+        ticket.set_nroTicket(oTicket.get_nroTicket());
+        ticket.set_solucion(etSolucionTicket.getText().toString());
+        ticket.set_observaciones("");
+        ticket.set_ordenServicio("");
+        ticket.set_usuarioAsignado(oTicket.get_idUsuarioAsignado());
+
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        String sJson = gson.toJson(ticket);
+        etSolucionTicket.setText(sJson);
+        Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
+    }
 }
