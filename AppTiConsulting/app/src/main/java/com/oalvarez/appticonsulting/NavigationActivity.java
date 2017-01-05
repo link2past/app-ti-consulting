@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.oalvarez.appticonsulting.entidades.SessionManager;
 import com.oalvarez.appticonsulting.fragments.LiquidacionFragment;
 import com.oalvarez.appticonsulting.fragments.TicketDetalleFragment;
 import com.oalvarez.appticonsulting.fragments.TicketFragment;
@@ -27,6 +28,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
     Toolbar toolbar;
 
     String sIdUsuario;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
         try{
             //setSupportActionBar(toolbar);
+            sessionManager = new SessionManager(NavigationActivity.this);
 
             Bundle bundle = getIntent().getExtras();
             if (bundle.getString("idusuario") != null && bundle.getString("nombreusuario") != null && bundle.getString("tipousuario") != null) {
@@ -92,6 +95,9 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
             case R.id.navLiquidacion:
                 fragment = new LiquidacionFragment();
                 toolbar.setTitle(R.string.liquidacion);
+                break;
+            case R.id.navCerrarSesion:
+                sessionManager.cerrarSesion();
                 break;
 
         }

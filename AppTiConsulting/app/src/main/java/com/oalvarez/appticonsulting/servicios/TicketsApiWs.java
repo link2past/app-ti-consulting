@@ -18,10 +18,15 @@ import retrofit2.http.Path;
 
 public interface TicketsApiWs {
 
+    //region Métodos de Usuario
+
     @Headers({"Accept: application/json", "Content-Type: application/json"})
     @POST("usuario")
     Call<Token> Login(@Body Usuario usuario);
 
+    //endregion
+
+    //region Métodos de tickets
     @GET("ticket/{accion}/{id}")
     Call<ArrayList<Ticket>> ConsultarTicketsAsignados(@Path("accion") String sAccion,  @Path("id") String sIdUsuarioAsignado);
 
@@ -31,4 +36,10 @@ public interface TicketsApiWs {
     @Headers({"Accept: application/json", "Content-Type: application/json"})
     @POST("ticket")
     Call<ResponseBody> AtenderTicket(@Body Ticket oTicket);
+    //endregion
+
+    //region Métodos de Estado de Tickets
+    @GET("estadoticket")
+    Call<ArrayList<EstadoTicket>> ListarEstadoTicket();
+    //endregion
 }

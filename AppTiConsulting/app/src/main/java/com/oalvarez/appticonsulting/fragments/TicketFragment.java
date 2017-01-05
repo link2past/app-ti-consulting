@@ -5,34 +5,37 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.oalvarez.appticonsulting.R;
 import com.oalvarez.appticonsulting.adapter.TicketAdapter;
+import com.oalvarez.appticonsulting.database.EstadoTicketDb;
+import com.oalvarez.appticonsulting.entidades.EstadoTicket;
 import com.oalvarez.appticonsulting.entidades.Ticket;
 import com.oalvarez.appticonsulting.events.ClickListener;
 import com.oalvarez.appticonsulting.events.RecyclerTouchListener;
 import com.oalvarez.appticonsulting.servicios.HelperWs;
 import com.oalvarez.appticonsulting.servicios.TicketsApiWs;
+import com.oalvarez.appticonsulting.util.Listas;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.R.attr.fragment;
-import static com.oalvarez.appticonsulting.R.id.toolbar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,9 +47,12 @@ public class TicketFragment extends Fragment {
     RecyclerView rvTicketsAsignados;
     @BindView(R.id.fabActualizar)
     FloatingActionButton fabActualizar;
+    @BindView(R.id.spEstadoTicket)
+    Spinner spEstadoTicket;
 
     private ArrayList<Ticket> listaTickets = new ArrayList<>();
     public TicketAdapter adapter;
+    private ArrayList<String> alEstadoTicket = new ArrayList<>();
 
     public TicketFragment() {
         // Required empty public constructor
@@ -60,8 +66,27 @@ public class TicketFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ticket, container, false);
         ButterKnife.bind(this, view);
 
+//        Realm realm = Realm.getDefaultInstance();
+//        RealmResults<EstadoTicketDb> tabla = realm.where(EstadoTicketDb.class).findAll().sort("descripcion");
+//
+//        for(EstadoTicketDb item : tabla){
+//            alEstadoTicket.add(item.getDescripcion());
+//        }
+
+        ArrayList<String> tabla = new Listas().listarEstadoTicketDb();
+
+        //alEstadoTicket = new ArrayList<>();
+        alEstadoTicket.add("Registrado");
+        alEstadoTicket.add("Asignado");
+        alEstadoTicket.add("Recibido");
+        alEstadoTicket.add("Atendido");
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, alEstadoTicket);
+        spEstadoTicket.setAdapter(arrayAdapter);
+        arrayAdapter.notifyDataSetChanged();
+
         Bundle bundle = this.getArguments();
-        if (bundle != null){
+        if (bundle != null) {
 
             String sIdUsuario = bundle.getString("idusuario");
 
@@ -74,13 +99,12 @@ public class TicketFragment extends Fragment {
                 public void onResponse(Call<ArrayList<Ticket>> call, Response<ArrayList<Ticket>> response) {
                     listaTickets = response.body();
 
-                    if (listaTickets != null){
+                    if (listaTickets != null) {
                         adapter = new TicketAdapter(listaTickets);
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                         rvTicketsAsignados.setLayoutManager(layoutManager);
                         rvTicketsAsignados.setAdapter(adapter);
-                    }
-                    else{
+                    } else {
                         Toast.makeText(getActivity(), "El usuario no tiene tickets asignados", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -104,6 +128,19 @@ public class TicketFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        spEstadoTicket.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String sItem = alEstadoTicket.get(i);
+                Toast.makeText(getActivity(), sItem, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         rvTicketsAsignados.addOnItemTouchListener(new RecyclerTouchListener(
                 getActivity(),

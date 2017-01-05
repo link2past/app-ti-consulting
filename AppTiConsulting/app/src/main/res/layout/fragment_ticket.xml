@@ -21,6 +21,23 @@
             android:textStyle="bold"
             android:textColor="@color/secondaryText"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filtro"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spEstadoTicket"></Spinner>
+
+        </LinearLayout>
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="5dp" />

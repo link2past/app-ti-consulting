@@ -28,4 +28,5 @@
     <string name="tituloticket">Título</string>
     <string name="detalleticket">Detalle</string>
     <string name="solucionticket">Solución</string>
+    <string name="filtro">Filtrar por:</string>
 </resources>

@@ -2,6 +2,7 @@ package com.oalvarez.appticonsulting;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
@@ -11,17 +12,27 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.oalvarez.appticonsulting.database.EstadoTicketDb;
+import com.oalvarez.appticonsulting.entidades.EstadoTicket;
+import com.oalvarez.appticonsulting.entidades.SessionManager;
 import com.oalvarez.appticonsulting.entidades.Token;
 import com.oalvarez.appticonsulting.entidades.Usuario;
 import com.oalvarez.appticonsulting.servicios.HelperWs;
 import com.oalvarez.appticonsulting.servicios.TicketsApiWs;
 import com.oalvarez.appticonsulting.util.Encrypt;
+import com.oalvarez.appticonsulting.util.Listas;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,12 +53,86 @@ public class MainActivity extends BaseActivity {
     TextInputLayout tilContrasena;
 
     private Boolean bLoginCorrecto = false;
+    private SessionManager sessionManager;
+    private ArrayList<EstadoTicket> listaEstadoTicket;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        sessionManager = new SessionManager(MainActivity.this);
+        Toast.makeText(MainActivity.this, "User Login Status: " + sessionManager.estaLogeado(), Toast.LENGTH_LONG).show();
+
+        if (sessionManager.estaLogeado()) {
+
+            //ArrayList<EstadoTicket> tabla = new Listas().actualizarEstadoTicketDb();
+
+
+//            TicketsApiWs ticketsApiWs = HelperWs.getConfiguration().create(TicketsApiWs.class);
+//            Call<ArrayList<EstadoTicket>> respuesta = ticketsApiWs.ListarEstadoTicket();
+//
+//            respuesta.enqueue(new Callback<ArrayList<EstadoTicket>>() {
+//                @Override
+//                public void onResponse(Call<ArrayList<EstadoTicket>> call, Response<ArrayList<EstadoTicket>> response) {
+//                    listaEstadoTicket = response.body();
+//
+//                    Realm realm = Realm.getDefaultInstance();
+//
+//                    final long cantRegistros = realm.where(EstadoTicketDb.class).count();
+//
+//                    if (cantRegistros != Long.parseLong(String.valueOf(listaEstadoTicket.size()))){
+//
+//                        realm.executeTransactionAsync(new Realm.Transaction() {
+//                            @Override
+//                            public void execute(Realm realm) {
+//
+//                                if (cantRegistros > 0 ){
+//                                    RealmResults<EstadoTicketDb> tabla = realm.where(EstadoTicketDb.class).findAll();
+//                                    tabla.deleteAllFromRealm();
+//                                }
+//                                for (EstadoTicket item : listaEstadoTicket) {
+//                                    EstadoTicketDb estadoTicketDb = realm.createObject(EstadoTicketDb.class);
+//                                    estadoTicketDb.setIdEstadoTicket(item.get_idEstadoTicket());
+//                                    estadoTicketDb.setDescripcion(item.get_descripcion());
+//                                }
+//                            }
+//                        }, new Realm.Transaction.OnSuccess() {
+//                            @Override
+//                            public void onSuccess() {
+//
+//                            }
+//                        }, new Realm.Transaction.OnError() {
+//                            @Override
+//                            public void onError(Throwable error) {
+//
+//                            }
+//                        });
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<ArrayList<EstadoTicket>> call, Throwable t) {
+//
+//                }
+//            });
+
+
+            Token token = sessionManager.obtenerDatosSesion();
+            Intent intent = new Intent(MainActivity.this, NavigationActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("idusuario", token.get_idUsuario());
+            intent.putExtra("nombreusuario", token.get_usuario().get_nombre());
+            intent.putExtra("tipousuario", token.get_usuario().get_tipoUsuario().get_descripcion());
+            startActivity(intent);
+        }
 
         //throw new RuntimeException("Error de Prueba");
     }
@@ -59,8 +144,7 @@ public class MainActivity extends BaseActivity {
             tilUsuario.setError(getString(R.string.mensajeLoginNoUsuario));
             etUsuario.requestFocus();
             return;
-        }
-        else{
+        } else {
             tilUsuario.setError(null);
         }
 
@@ -68,8 +152,7 @@ public class MainActivity extends BaseActivity {
             tilContrasena.setError(getString(R.string.mensajeLoginNoContr));
             etContrasena.requestFocus();
             return;
-        }
-        else{
+        } else {
             tilContrasena.setError(null);
         }
 
@@ -103,7 +186,14 @@ public class MainActivity extends BaseActivity {
                     if (oToken != null) {
                         //Toast.makeText(MainActivity.this, oToken.get_token(), Toast.LENGTH_SHORT).show();
                         pbLogin.setVisibility(View.INVISIBLE);
+
+                        sessionManager.crearSesion(oToken.get_idUsuario(), oToken.get_usuario().get_nombre(),
+                                oToken.get_usuario().get_idTipoUsuario(), oToken.get_usuario().get_tipoUsuario().get_descripcion(),
+                                oToken.get_token());
+
                         Intent intent = new Intent(MainActivity.this, NavigationActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("idusuario", oToken.get_idUsuario());
                         intent.putExtra("nombreusuario", oToken.get_usuario().get_nombre());
                         intent.putExtra("tipousuario", oToken.get_usuario().get_tipoUsuario().get_descripcion());
@@ -132,4 +222,5 @@ public class MainActivity extends BaseActivity {
             startActivity(intent);
         }*/
     }
+
 }
