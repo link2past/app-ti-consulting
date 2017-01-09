@@ -5,39 +5,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.oalvarez.appticonsulting.fragments.TicketDetalleFragment">
 
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="120dp">
+        <!--<android.support.design.widget.AppBarLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="120dp">-->
 
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:expandedTitleMarginStart="48dp"
-                app:expandedTitleMarginEnd="64dp">
+            <!--<android.support.design.widget.CollapsingToolbarLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--app:layout_scrollFlags="scroll|exitUntilCollapsed"-->
+                <!--app:expandedTitleMarginStart="48dp"-->
+                <!--app:expandedTitleMarginEnd="64dp">-->
 
-                <com.oalvarez.appticonsulting.views.ScrollableMapView
-                    android:id="@+id/mapSede"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp">
+            <!--</android.support.design.widget.CollapsingToolbarLayout>-->
 
-                </com.oalvarez.appticonsulting.views.ScrollableMapView>
-
-            </android.support.design.widget.CollapsingToolbarLayout>
-
-        </android.support.design.widget.AppBarLayout>
+        <!--</android.support.design.widget.AppBarLayout>-->
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/nsvScroll"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="5dp">
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/mapSede"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp">
+
+                </com.google.android.gms.maps.MapView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -217,7 +217,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/fabTicket"
             android:layout_gravity="bottom|end"
-            android:src="@android:drawable/ic_input_add"
+            android:src="@drawable/ic_check_white_48dp"
             />
 
     <!-- TODO: Update blank fragment layout -->

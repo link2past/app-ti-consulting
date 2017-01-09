@@ -43,7 +43,7 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
 
 
     @BindView(R.id.mapSede)
-    ScrollableMapView mapSede;
+    MapView mapSede;
 
     @BindView(R.id.etNroTicket)
     EditText etNroTicket;

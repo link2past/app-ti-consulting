@@ -30,6 +30,25 @@ public class ScrollableMapView extends MapView {
         super(context, googleMapOptions);
     }
 
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        int action = event.getAction();
+//        switch (action) {
+//            case MotionEvent.ACTION_DOWN:
+//                // Disallow ScrollView to intercept touch events.
+//                this.getParent().requestDisallowInterceptTouchEvent(true);
+//                break;
+//
+//            case MotionEvent.ACTION_UP:
+//                // Allow ScrollView to intercept touch events.
+//                this.getParent().requestDisallowInterceptTouchEvent(false);
+//                break;
+//        }
+//
+//        super.onTouchEvent(event);
+//        return true;
+//    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
@@ -43,7 +62,7 @@ public class ScrollableMapView extends MapView {
                 break;
         }
 
-        super.onTouchEvent(ev);
-        return true;
+
+        return super.onTouchEvent(ev);
     }
 }

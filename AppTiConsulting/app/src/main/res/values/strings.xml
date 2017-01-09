@@ -29,4 +29,7 @@
     <string name="detalleticket">Detalle</string>
     <string name="solucionticket">Solución</string>
     <string name="filtro">Filtrar por:</string>
+    <string name="ticketrepuestos">Repuestos Utilizados</string>
+    <string name="agregarrepuestos">Agregar Repuestos</string>
+    <string name="buscarrepuesto">Buscar Repuesto</string>
 </resources>
