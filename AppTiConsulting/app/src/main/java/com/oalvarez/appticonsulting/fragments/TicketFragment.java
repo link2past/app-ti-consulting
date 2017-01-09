@@ -66,29 +66,18 @@ public class TicketFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ticket, container, false);
         ButterKnife.bind(this, view);
 
-//        Realm realm = Realm.getDefaultInstance();
-//        RealmResults<EstadoTicketDb> tabla = realm.where(EstadoTicketDb.class).findAll().sort("descripcion");
-//
-//        for(EstadoTicketDb item : tabla){
-//            alEstadoTicket.add(item.getDescripcion());
-//        }
-
-        ArrayList<String> tabla = new Listas().listarEstadoTicketDb();
-
-        //alEstadoTicket = new ArrayList<>();
-        alEstadoTicket.add("Registrado");
-        alEstadoTicket.add("Asignado");
-        alEstadoTicket.add("Recibido");
-        alEstadoTicket.add("Atendido");
-
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, alEstadoTicket);
-        spEstadoTicket.setAdapter(arrayAdapter);
-        arrayAdapter.notifyDataSetChanged();
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
 
             String sIdUsuario = bundle.getString("idusuario");
+            int nIdTipoUsuario = bundle.getInt("idtipousuario");
+
+            alEstadoTicket = new Listas().listarEstadoTicketDb(nIdTipoUsuario);
+
+            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, alEstadoTicket);
+            spEstadoTicket.setAdapter(arrayAdapter);
+            arrayAdapter.notifyDataSetChanged();
 
             TicketsApiWs ticketsApiWs = HelperWs.getConfiguration().create(TicketsApiWs.class);
             String sUsuario = sIdUsuario;
@@ -128,6 +117,8 @@ public class TicketFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+
 
         spEstadoTicket.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

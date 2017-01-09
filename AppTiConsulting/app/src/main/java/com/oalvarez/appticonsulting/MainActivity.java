@@ -54,11 +54,7 @@ public class MainActivity extends BaseActivity {
 
     private Boolean bLoginCorrecto = false;
     private SessionManager sessionManager;
-    private ArrayList<EstadoTicket> listaEstadoTicket;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
+
     private GoogleApiClient client;
 
     @Override
@@ -72,64 +68,13 @@ public class MainActivity extends BaseActivity {
 
         if (sessionManager.estaLogeado()) {
 
-            //ArrayList<EstadoTicket> tabla = new Listas().actualizarEstadoTicketDb();
-
-
-//            TicketsApiWs ticketsApiWs = HelperWs.getConfiguration().create(TicketsApiWs.class);
-//            Call<ArrayList<EstadoTicket>> respuesta = ticketsApiWs.ListarEstadoTicket();
-//
-//            respuesta.enqueue(new Callback<ArrayList<EstadoTicket>>() {
-//                @Override
-//                public void onResponse(Call<ArrayList<EstadoTicket>> call, Response<ArrayList<EstadoTicket>> response) {
-//                    listaEstadoTicket = response.body();
-//
-//                    Realm realm = Realm.getDefaultInstance();
-//
-//                    final long cantRegistros = realm.where(EstadoTicketDb.class).count();
-//
-//                    if (cantRegistros != Long.parseLong(String.valueOf(listaEstadoTicket.size()))){
-//
-//                        realm.executeTransactionAsync(new Realm.Transaction() {
-//                            @Override
-//                            public void execute(Realm realm) {
-//
-//                                if (cantRegistros > 0 ){
-//                                    RealmResults<EstadoTicketDb> tabla = realm.where(EstadoTicketDb.class).findAll();
-//                                    tabla.deleteAllFromRealm();
-//                                }
-//                                for (EstadoTicket item : listaEstadoTicket) {
-//                                    EstadoTicketDb estadoTicketDb = realm.createObject(EstadoTicketDb.class);
-//                                    estadoTicketDb.setIdEstadoTicket(item.get_idEstadoTicket());
-//                                    estadoTicketDb.setDescripcion(item.get_descripcion());
-//                                }
-//                            }
-//                        }, new Realm.Transaction.OnSuccess() {
-//                            @Override
-//                            public void onSuccess() {
-//
-//                            }
-//                        }, new Realm.Transaction.OnError() {
-//                            @Override
-//                            public void onError(Throwable error) {
-//
-//                            }
-//                        });
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<ArrayList<EstadoTicket>> call, Throwable t) {
-//
-//                }
-//            });
-
-
             Token token = sessionManager.obtenerDatosSesion();
             Intent intent = new Intent(MainActivity.this, NavigationActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("idusuario", token.get_idUsuario());
             intent.putExtra("nombreusuario", token.get_usuario().get_nombre());
+            intent.putExtra("idtipousuario", token.get_usuario().get_idTipoUsuario());
             intent.putExtra("tipousuario", token.get_usuario().get_tipoUsuario().get_descripcion());
             startActivity(intent);
         }
@@ -196,6 +141,7 @@ public class MainActivity extends BaseActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("idusuario", oToken.get_idUsuario());
                         intent.putExtra("nombreusuario", oToken.get_usuario().get_nombre());
+                        intent.putExtra("idtipousuario", oToken.get_usuario().get_idTipoUsuario());
                         intent.putExtra("tipousuario", oToken.get_usuario().get_tipoUsuario().get_descripcion());
                         startActivity(intent);
                         bLoginCorrecto = true;

@@ -28,6 +28,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
     Toolbar toolbar;
 
     String sIdUsuario;
+    int nIdTipoUsuario;
     private SessionManager sessionManager;
 
     @Override
@@ -41,9 +42,11 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
             sessionManager = new SessionManager(NavigationActivity.this);
 
             Bundle bundle = getIntent().getExtras();
-            if (bundle.getString("idusuario") != null && bundle.getString("nombreusuario") != null && bundle.getString("tipousuario") != null) {
+            if (bundle.getString("idusuario") != null && bundle.getString("nombreusuario") != null
+                    && bundle.getString("tipousuario") != null) {
 
                 sIdUsuario = bundle.getString("idusuario");
+                nIdTipoUsuario = bundle.getInt("idtipousuario");
 
                 DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
                 ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -84,6 +87,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
                 fragment = new TicketFragment();
                 Bundle bundleFragment = new Bundle();
                 bundleFragment.putString("idusuario", sIdUsuario);
+                bundleFragment.putInt("idtipousuario", nIdTipoUsuario);
                 fragment.setArguments(bundleFragment);
                 toolbar.setTitle(R.string.ticketsasignados);
                 break;

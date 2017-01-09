@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.crashlytics.android.Crashlytics;
+import com.oalvarez.appticonsulting.database.EstadoTicketDb;
+
 import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -29,6 +31,8 @@ public class Configuracion extends Application {
                 new RealmConfiguration.Builder()
                     .schemaVersion(1)
                     .name("GesTI.realm")
+                    .initialData(new RealmInitialData())
+                    .deleteRealmIfMigrationNeeded()
                     .build();
         Realm.setDefaultConfiguration(realmConfiguration);
     }

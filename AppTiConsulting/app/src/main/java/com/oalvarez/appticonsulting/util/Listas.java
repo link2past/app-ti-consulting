@@ -1,13 +1,18 @@
 package com.oalvarez.appticonsulting.util;
 
+import android.content.Context;
 import android.widget.Toast;
 
+import com.oalvarez.appticonsulting.database.EstadoTicketDb;
 import com.oalvarez.appticonsulting.entidades.EstadoTicket;
 import com.oalvarez.appticonsulting.servicios.HelperWs;
 import com.oalvarez.appticonsulting.servicios.TicketsApiWs;
 
 import java.util.ArrayList;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -18,30 +23,41 @@ import retrofit2.Response;
 
 public class Listas {
 
-    ArrayList<EstadoTicket> listaEstadoTicket = new ArrayList<>();
-    ArrayList<String> tablaEstadoTicket = new ArrayList<>();
+    public ArrayList<String> listarEstadoTicketDb(int nIdTipoUsuario){
 
-    public ArrayList<String> listarEstadoTicketDb(){
+        ArrayList<String> tabla = new ArrayList<>();
 
-        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration().create(TicketsApiWs.class);
-        final Call<ArrayList<EstadoTicket>> tabla = ticketsApiWs.ListarEstadoTicket();
+        Realm realm = Realm.getDefaultInstance();
 
-        tabla.enqueue(new Callback<ArrayList<EstadoTicket>>() {
-            @Override
-            public void onResponse(Call<ArrayList<EstadoTicket>> call, Response<ArrayList<EstadoTicket>> response) {
-                listaEstadoTicket = response.body();
+        RealmResults<EstadoTicketDb> realmResults = null;
 
-                for (EstadoTicket item: listaEstadoTicket) {
-                    tablaEstadoTicket.add(item.get_descripcion());
-                }
-            }
+        if (nIdTipoUsuario == 3){
+            realmResults = realm
+                    .where(EstadoTicketDb.class)
+                    .beginGroup()
+                        .equalTo("idEstadoTicket", 2 )
+                        .or()
+                        .equalTo("idEstadoTicket", 3 )
+                        .or()
+                        .equalTo("idEstadoTicket", 4 )
+                        .or()
+                        .equalTo("idEstadoTicket", 5 )
+                        .or()
+                        .equalTo("idEstadoTicket", 6 )
+                    .endGroup()
+                    .findAllSorted("idEstadoTicket", Sort.ASCENDING);
+        }else
+        {
+            realm
+                .where(EstadoTicketDb.class)
+                .findAllSorted("idEstadoTicket", Sort.ASCENDING);
+        }
 
-            @Override
-            public void onFailure(Call<ArrayList<EstadoTicket>> call, Throwable t) {
+        for (EstadoTicketDb item: realmResults) {
+            tabla.add(item.getDescripcion());
+        }
 
-            }
-        });
-        return tablaEstadoTicket;
+        return tabla;
     }
 
 }

@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -18,13 +20,11 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.oalvarez.appticonsulting.MainActivity;
 import com.oalvarez.appticonsulting.R;
 import com.oalvarez.appticonsulting.entidades.Ticket;
 import com.oalvarez.appticonsulting.servicios.HelperWs;
 import com.oalvarez.appticonsulting.servicios.TicketsApiWs;
+import com.oalvarez.appticonsulting.views.ScrollableMapView;
 
 import java.text.SimpleDateFormat;
 
@@ -43,7 +43,7 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
 
 
     @BindView(R.id.mapSede)
-    MapView mapSede;
+    ScrollableMapView mapSede;
 
     @BindView(R.id.etNroTicket)
     EditText etNroTicket;
@@ -79,6 +79,8 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
     TextInputLayout tilSolucionTicket;
     @BindView(R.id.fabTicket)
     FloatingActionButton fabTicket;
+    @BindView(R.id.nsvScroll)
+    NestedScrollView nsvScroll;
 
     private Ticket oTicket;
     private Double nLatitud;
@@ -193,6 +195,22 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
         if (mapSede != null) {
             mapSede.onResume();
         }
+
+        mapSede.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+                        nsvScroll.requestDisallowInterceptTouchEvent(true);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        nsvScroll.requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return mapSede.onTouchEvent(motionEvent);
+            }
+        });
     }
 
     @Override
@@ -259,7 +277,7 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
         respuesta.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.code()==200){
+                if (response.code() == 200) {
                     Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
                 }
             }
