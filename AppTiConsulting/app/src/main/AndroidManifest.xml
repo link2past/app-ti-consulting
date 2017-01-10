@@ -14,10 +14,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -36,7 +35,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="3bc7c7df773981a35f691f3cd79a9c1a21e6af1a" />
+            android:value="@string/api_fabric" />
     </application>
 
 </manifest>

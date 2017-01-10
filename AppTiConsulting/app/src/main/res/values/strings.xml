@@ -25,6 +25,9 @@
     <string name="liquidacion">Liquidación de Gastos</string>
 
     <string name="api_map">AIzaSyAHQ1gxeb00CEwpk7JMKHaJYYVCAHCbwq4</string>
+    <string name="api_fabric">3bc7c7df773981a35f691f3cd79a9c1a21e6af1a</string>
+
+
     <string name="tituloticket">Título</string>
     <string name="detalleticket">Detalle</string>
     <string name="solucionticket">Solución</string>
@@ -32,4 +35,7 @@
     <string name="ticketrepuestos">Repuestos Utilizados</string>
     <string name="agregarrepuestos">Agregar Repuestos</string>
     <string name="buscarrepuesto">Buscar Repuesto</string>
+    <string name="atendido">Atendido</string>
+    <string name="repuesto">Repuestos</string>
+    <string name="esperarepuesto">Espera Repuesto</string>
 </resources>

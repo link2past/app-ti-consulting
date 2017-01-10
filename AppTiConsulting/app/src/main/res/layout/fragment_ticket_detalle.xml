@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layoutTicketDetalle"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.oalvarez.appticonsulting.fragments.TicketDetalleFragment">
 
@@ -208,17 +209,43 @@
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
+
+                    <com.oalvarez.appticonsulting.views.MovableButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnAtender"
+                        android:text="@string/atendido"/>
+
+                    <com.oalvarez.appticonsulting.views.MovableButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnRepuesto"
+                        android:text="@string/repuesto" />
+
+                    <com.oalvarez.appticonsulting.views.MovableButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnEsperaRepuesto"
+                        android:text="@string/esperarepuesto"/>
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
     
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/fabTicket"
-            android:layout_gravity="bottom|end"
-            android:src="@drawable/ic_check_white_48dp"
-            />
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/fabTicket"-->
+            <!--android:layout_gravity="bottom|end"-->
+            <!--android:src="@drawable/ic_check_white_48dp"-->
+            <!--/>-->
 
     <!-- TODO: Update blank fragment layout -->
 

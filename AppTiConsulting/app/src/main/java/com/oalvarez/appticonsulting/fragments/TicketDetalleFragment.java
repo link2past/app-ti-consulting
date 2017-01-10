@@ -2,7 +2,8 @@ package com.oalvarez.appticonsulting.fragments;
 
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
@@ -11,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,7 +25,7 @@ import com.oalvarez.appticonsulting.R;
 import com.oalvarez.appticonsulting.entidades.Ticket;
 import com.oalvarez.appticonsulting.servicios.HelperWs;
 import com.oalvarez.appticonsulting.servicios.TicketsApiWs;
-import com.oalvarez.appticonsulting.views.ScrollableMapView;
+import com.oalvarez.appticonsulting.views.MovableButton;
 
 import java.text.SimpleDateFormat;
 
@@ -77,10 +78,16 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
     EditText etSolucionTicket;
     @BindView(R.id.tilSolucionTicket)
     TextInputLayout tilSolucionTicket;
-    @BindView(R.id.fabTicket)
-    FloatingActionButton fabTicket;
     @BindView(R.id.nsvScroll)
     NestedScrollView nsvScroll;
+    @BindView(R.id.btnAtender)
+    MovableButton btnAtender;
+    @BindView(R.id.btnRepuesto)
+    MovableButton btnRepuesto;
+    @BindView(R.id.btnEsperaRepuesto)
+    MovableButton btnEsperaRepuesto;
+    @BindView(R.id.layoutTicketDetalle)
+    CoordinatorLayout layoutTicketDetalle;
 
     private Ticket oTicket;
     private Double nLatitud;
@@ -255,7 +262,7 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
 
     }
 
-    @OnClick(R.id.fabTicket)
+    @OnClick(R.id.btnAtender)
     public void onClick() {
 //        Toast.makeText(getActivity(), "FAB",
 //                Toast.LENGTH_SHORT).show();
@@ -278,7 +285,9 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.code() == 200) {
-                    Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket Atendido", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -287,5 +296,17 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
 
             }
         });
+    }
+
+    @OnClick(R.id.btnEsperaRepuesto)
+    public void esperarRepuesto(){
+        Snackbar snackbar = Snackbar.make(nsvScroll, "Prueba", Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
+    @OnClick(R.id.btnRepuesto)
+    public void agregarRepuesto(){
+        Snackbar snackbar = Snackbar.make(layoutTicketDetalle, "Prueba", Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 }

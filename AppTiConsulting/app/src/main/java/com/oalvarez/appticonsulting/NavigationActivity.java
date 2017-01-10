@@ -123,7 +123,16 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            int fragments = getSupportFragmentManager().getBackStackEntryCount();
+            if (fragments == 1) {
+                finish();
+            } else {
+                if (getFragmentManager().getBackStackEntryCount() > 1) {
+                    getFragmentManager().popBackStack();
+                } else {
+                    super.onBackPressed();
+                }
+            }
         }
     }
 
@@ -152,4 +161,6 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         //getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
         return true;
     }
+
+
 }
