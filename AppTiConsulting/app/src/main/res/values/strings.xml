@@ -38,4 +38,10 @@
     <string name="atendido">Atendido</string>
     <string name="repuesto">Repuestos</string>
     <string name="esperarepuesto">Espera Repuesto</string>
+    <string name="itemdescripcion">Descripción: </string>
+    <string name="moneda">Mon</string>
+    <string name="preciorep">Precio</string>
+    <string name="itemcantidad">Cant.</string>
+    <string name="norepuestos">El ticket no tiene repuestos asignados</string>
+    <string name="cantidad">Cantidad</string>
 </resources>

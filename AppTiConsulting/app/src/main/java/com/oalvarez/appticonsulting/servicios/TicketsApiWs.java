@@ -36,6 +36,17 @@ public interface TicketsApiWs {
     @Headers({"Accept: application/json", "Content-Type: application/json"})
     @POST("ticket")
     Call<ResponseBody> AtenderTicket(@Body Ticket oTicket);
+
+    @GET("ticketdetalle/{id}")
+    Call<ArrayList<TicketDetalle>> ListarDetalleTicket(@Path("id") int id);
+
+    @Headers({"Accept: application/json", "Content-Type: application/json"})
+    @POST("ticketdetalle")
+    Call<ResponseBody> AgregarRepuesto(@Body TicketDetalle ticketDetalle);
+
+    @GET("repuesto/{id}")
+    Call<ArrayList<Repuesto>> BuscarRepuesto(@Path("id") String id);
+
     //endregion
 
     //region Métodos de Estado de Tickets

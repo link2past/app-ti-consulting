@@ -20,7 +20,7 @@ public class HelperWs {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
 
         return new Retrofit.Builder()
-                .baseUrl("http://192.168.10.189/webapitickets/api/")
+                .baseUrl("http://192.168.1.10/webapitickets/api/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }

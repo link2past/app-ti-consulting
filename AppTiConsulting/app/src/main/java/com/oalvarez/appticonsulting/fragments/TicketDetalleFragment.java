@@ -1,12 +1,15 @@
 package com.oalvarez.appticonsulting.fragments;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -14,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -81,11 +85,11 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
     @BindView(R.id.nsvScroll)
     NestedScrollView nsvScroll;
     @BindView(R.id.btnAtender)
-    MovableButton btnAtender;
+    Button btnAtender;
     @BindView(R.id.btnRepuesto)
-    MovableButton btnRepuesto;
+    Button btnRepuesto;
     @BindView(R.id.btnEsperaRepuesto)
-    MovableButton btnEsperaRepuesto;
+    Button btnEsperaRepuesto;
     @BindView(R.id.layoutTicketDetalle)
     CoordinatorLayout layoutTicketDetalle;
 
@@ -264,8 +268,7 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
 
     @OnClick(R.id.btnAtender)
     public void onClick() {
-//        Toast.makeText(getActivity(), "FAB",
-//                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "FAB",Toast.LENGTH_SHORT).show();
         Ticket ticket = new Ticket();
         ticket.set_nroTicket(oTicket.get_nroTicket());
         ticket.set_solucion(etSolucionTicket.getText().toString());
@@ -300,13 +303,21 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
 
     @OnClick(R.id.btnEsperaRepuesto)
     public void esperarRepuesto(){
-        Snackbar snackbar = Snackbar.make(nsvScroll, "Prueba", Snackbar.LENGTH_LONG);
-        snackbar.show();
+
     }
 
     @OnClick(R.id.btnRepuesto)
     public void agregarRepuesto(){
-        Snackbar snackbar = Snackbar.make(layoutTicketDetalle, "Prueba", Snackbar.LENGTH_LONG);
-        snackbar.show();
+        Fragment fragment = null;
+        fragment = new TicketRepuestoFragment();
+        Bundle bundleRepuesto = new Bundle();
+        bundleRepuesto.putString("nroticket", etNroTicket.getText().toString());
+        fragment.setArguments(bundleRepuesto);
+
+        if (fragment != null) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, fragment).addToBackStack("fragment");
+            ft.commit();
+        }
     }
 }
