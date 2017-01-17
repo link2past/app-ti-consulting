@@ -2,7 +2,6 @@ package com.oalvarez.appticonsulting;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
@@ -15,24 +14,16 @@ import android.widget.Toast;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.oalvarez.appticonsulting.database.EstadoTicketDb;
-import com.oalvarez.appticonsulting.entidades.EstadoTicket;
 import com.oalvarez.appticonsulting.entidades.SessionManager;
 import com.oalvarez.appticonsulting.entidades.Token;
 import com.oalvarez.appticonsulting.entidades.Usuario;
 import com.oalvarez.appticonsulting.servicios.HelperWs;
 import com.oalvarez.appticonsulting.servicios.TicketsApiWs;
 import com.oalvarez.appticonsulting.util.Encrypt;
-import com.oalvarez.appticonsulting.util.Listas;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
-import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,6 +42,8 @@ public class MainActivity extends BaseActivity {
     TextInputLayout tilUsuario;
     @BindView(R.id.tilContrasena)
     TextInputLayout tilContrasena;
+    @BindView(R.id.btnConfiguracion)
+    Button btnConfiguracion;
 
     private Boolean bLoginCorrecto = false;
     private SessionManager sessionManager;
@@ -118,7 +111,7 @@ public class MainActivity extends BaseActivity {
         String sJson = gsonParse.toJson(oUsuario);
         //Toast.makeText(TipoUsuarioActivity.this, sJson, Toast.LENGTH_SHORT).show();
 
-        TicketsApiWs ws = HelperWs.getConfiguration().create(TicketsApiWs.class);
+        TicketsApiWs ws = HelperWs.getConfiguration(MainActivity.this).create(TicketsApiWs.class);
 
         Call<Token> resultadoLogin = ws.Login(oUsuario);
         resultadoLogin.enqueue(new Callback<Token>() {
@@ -167,4 +160,9 @@ public class MainActivity extends BaseActivity {
         }*/
     }
 
+    @OnClick(R.id.btnConfiguracion)
+    public void onClickConfiguracion() {
+        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(intent);
+    }
 }

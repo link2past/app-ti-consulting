@@ -86,7 +86,7 @@ public class TicketRepuestoFragment extends Fragment {
     }
 
     private void listarRepuestos(){
-        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration().create(TicketsApiWs.class);
+        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
         Call<ArrayList<TicketDetalle>> respuesta = ticketsApiWs.ListarDetalleTicket(nroTicket);
 
         respuesta.enqueue(new Callback<ArrayList<TicketDetalle>>() {
@@ -147,7 +147,7 @@ public class TicketRepuestoFragment extends Fragment {
 //                                        etBuscarRepuesto.setText(sJson);
 //                                        Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
 
-                                        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration().create(TicketsApiWs.class);
+                                        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
                                         Call<ResponseBody> respuesta = ticketsApiWs.AgregarRepuesto(ticketDetalle);
 
                                         respuesta.enqueue(new Callback<ResponseBody>() {
@@ -190,7 +190,7 @@ public class TicketRepuestoFragment extends Fragment {
     public void onClick() {
 
         String sNombreRepuesto = etBuscarRepuesto.getText().toString().trim();
-        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration().create(TicketsApiWs.class);
+        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
         Call<ArrayList<Repuesto>> respuesta = ticketsApiWs.BuscarRepuesto(sNombreRepuesto);
 
         respuesta.enqueue(new Callback<ArrayList<Repuesto>>() {

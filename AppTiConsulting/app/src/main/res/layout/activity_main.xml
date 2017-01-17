@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center_horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -55,6 +55,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/login"
                 android:id="@+id/btnLogin"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/configuracion"
+                android:id="@+id/btnConfiguracion"/>
 
             <ProgressBar
                 android:layout_width="wrap_content"

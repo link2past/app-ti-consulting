@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.oalvarez.appticonsulting.MainActivity;
+import com.oalvarez.appticonsulting.R;
 
 /**
  * Created by oalvarez on 05/01/2017.
@@ -25,11 +26,25 @@ public class SessionManager {
     public static final String KEY_TYPE_USER_CODE = "IdTipoUsuario";
     public static final String KEY_TYPE_USER = "TipoUsuario";
     public static final String KEY_TOKEN = "Token";
+    public static final String KEY_URL_SERVER = "UrlServer";
 
     public SessionManager(Context context){
         this.context = context;
         preferences = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = preferences.edit();
+    }
+
+    public Preferencias obtenerPreferencias(){
+        Preferencias preferencias = new Preferencias();
+
+        preferencias.setUrlServer(preferences.getString(KEY_URL_SERVER, context.getString(R.string.default_web_api_url) ));
+
+        return preferencias;
+    }
+
+    public void guardarPreferencias(Preferencias preferencias){
+        editor.putString(KEY_URL_SERVER, preferencias.getUrlServer());
+        editor.commit();
     }
 
     public void crearSesion(String sUsuario, String sNombreusuario, int nIdTipoUsuario, String sTipoUsuario, String sToken){
@@ -44,7 +59,14 @@ public class SessionManager {
     }
 
     public void cerrarSesion(){
-        editor.clear();
+        //editor.clear();
+        editor.remove(IS_LOGIN);
+        editor.remove(KEY_USER);
+        editor.remove(KEY_NAME);
+        editor.remove(KEY_TYPE_USER_CODE);
+        editor.remove(KEY_TYPE_USER);
+        editor.remove(KEY_TOKEN);
+
         editor.commit();
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

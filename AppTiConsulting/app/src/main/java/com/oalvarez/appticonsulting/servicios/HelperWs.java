@@ -1,9 +1,12 @@
 package com.oalvarez.appticonsulting.servicios;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.oalvarez.appticonsulting.entidades.Preferencias;
+import com.oalvarez.appticonsulting.entidades.SessionManager;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -14,13 +17,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HelperWs {
 
+
     @NonNull
-    public static Retrofit getConfiguration(){
+    public static Retrofit getConfiguration(Context context){
+
+        SessionManager sessionManager = new SessionManager(context);
+        Preferencias preferencias = sessionManager.obtenerPreferencias();
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
 
         return new Retrofit.Builder()
-                .baseUrl("http://192.168.1.10/webapitickets/api/")
+                .baseUrl(preferencias.getUrlServer())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }

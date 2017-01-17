@@ -26,6 +26,7 @@
 
     <string name="api_map">AIzaSyAHQ1gxeb00CEwpk7JMKHaJYYVCAHCbwq4</string>
     <string name="api_fabric">3bc7c7df773981a35f691f3cd79a9c1a21e6af1a</string>
+    <string name="default_web_api_url">http://192.168.10.189/webapitickets/api/</string>
 
 
     <string name="tituloticket">Título</string>
@@ -44,4 +45,7 @@
     <string name="itemcantidad">Cant.</string>
     <string name="norepuestos">El ticket no tiene repuestos asignados</string>
     <string name="cantidad">Cantidad</string>
+    <string name="urlserver">URL del Servidor</string>
+    <string name="guardarconfig">Guardar Configuración</string>
+    <string name="configuracion">Configuración</string>
 </resources>

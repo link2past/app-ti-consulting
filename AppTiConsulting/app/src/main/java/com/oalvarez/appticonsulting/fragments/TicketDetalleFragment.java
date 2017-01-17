@@ -126,7 +126,7 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
             int nroTicket = bundle.getInt("nroticket");
             etNroTicket.setText(String.valueOf(nroTicket));
 
-            TicketsApiWs ticketsApiWs = HelperWs.getConfiguration().create(TicketsApiWs.class);
+            TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
             Call<Ticket> respuesta = ticketsApiWs.ConsultarTicket(nroTicket);
 
             respuesta.enqueue(new Callback<Ticket>() {
@@ -281,7 +281,7 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
         //etSolucionTicket.setText(sJson);
         //Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
 
-        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration().create(TicketsApiWs.class);
+        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
         Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
 
         respuesta.enqueue(new Callback<ResponseBody>() {

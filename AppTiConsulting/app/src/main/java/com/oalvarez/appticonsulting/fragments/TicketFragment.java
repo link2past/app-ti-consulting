@@ -79,7 +79,7 @@ public class TicketFragment extends Fragment {
             spEstadoTicket.setAdapter(arrayAdapter);
             arrayAdapter.notifyDataSetChanged();
 
-            TicketsApiWs ticketsApiWs = HelperWs.getConfiguration().create(TicketsApiWs.class);
+            TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
             String sUsuario = sIdUsuario;
             Call<ArrayList<Ticket>> respuesta = ticketsApiWs.ConsultarTicketsAsignados("asignado", sUsuario);
 
