@@ -1,5 +1,6 @@
 package com.oalvarez.appticonsulting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -43,6 +44,15 @@ public class SettingsActivity extends AppCompatActivity {
         sessionManager.guardarPreferencias(preferencias);
         Toast.makeText(SettingsActivity.this, "Se guardó la configuración.",
                 Toast.LENGTH_SHORT).show();
+
+        if (!sessionManager.estaLogeado()){
+            Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+        else{
+            finish();
+        }
 
     }
 }

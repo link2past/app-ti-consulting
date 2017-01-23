@@ -275,6 +275,7 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
         ticket.set_observaciones("");
         ticket.set_ordenServicio("");
         ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
+        ticket.set_idEstadoTicket(4);
 
         //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         //String sJson = gson.toJson(ticket);
@@ -303,7 +304,34 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
 
     @OnClick(R.id.btnEsperaRepuesto)
     public void esperarRepuesto(){
+        Ticket ticket = new Ticket();
+        ticket.set_nroTicket(oTicket.get_nroTicket());
+        ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
+        ticket.set_idEstadoTicket(6);
 
+        //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        //String sJson = gson.toJson(ticket);
+        //etSolucionTicket.setText(sJson);
+        //Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
+
+        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
+        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
+
+        respuesta.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code() == 200) {
+                    Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket En Espera de Repuesto", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     @OnClick(R.id.btnRepuesto)
