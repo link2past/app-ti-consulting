@@ -1,35 +1,25 @@
 package com.oalvarez.appticonsulting.fragments;
 
 
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.oalvarez.appticonsulting.R;
 import com.oalvarez.appticonsulting.entidades.Ticket;
 import com.oalvarez.appticonsulting.servicios.HelperWs;
 import com.oalvarez.appticonsulting.servicios.TicketsApiWs;
-import com.oalvarez.appticonsulting.views.MovableButton;
 
 import java.text.SimpleDateFormat;
 
@@ -44,11 +34,8 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TicketDetalleFragment extends Fragment implements OnMapReadyCallback {
+public class TicketDetalleFragment extends Fragment {
 
-
-    @BindView(R.id.mapSede)
-    MapView mapSede;
 
     @BindView(R.id.etNroTicket)
     EditText etNroTicket;
@@ -92,12 +79,10 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
     Button btnEsperaRepuesto;
     @BindView(R.id.layoutTicketDetalle)
     CoordinatorLayout layoutTicketDetalle;
+    @BindView(R.id.btnVerDireccion)
+    Button btnVerDireccion;
 
     private Ticket oTicket;
-    private Double nLatitud;
-    private Double nLongitud;
-
-    GoogleMap gMap;
 
     public TicketDetalleFragment() {
         // Required empty public constructor
@@ -112,19 +97,12 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
 
         final Bundle bundle = this.getArguments();
 
-        mapSede.onCreate(savedInstanceState);
-        mapSede.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                //googleMap.setMyLocationEnabled(true);
-                gMap = googleMap;
-                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-            }
-        });
-
         if (bundle != null) {
             int nroTicket = bundle.getInt("nroticket");
             etNroTicket.setText(String.valueOf(nroTicket));
+
+
+
 
             TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
             Call<Ticket> respuesta = ticketsApiWs.ConsultarTicket(nroTicket);
@@ -149,19 +127,6 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
 
                         etDetalleTicket.setText(oTicket.get_detalle());
 
-                        nLatitud = Double.parseDouble(oTicket.get_sede().get_latitud());
-                        nLongitud = Double.parseDouble(oTicket.get_sede().get_longitud());
-
-                        gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-
-                        gMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(nLatitud, nLongitud))
-                                .title(oTicket.get_cliente().get_razonSocial())
-                                .snippet(oTicket.get_sede().get_nombre())
-                        );
-
-                        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new
-                                LatLng(nLatitud, nLongitud), 17));
                     }
                 }
 
@@ -170,6 +135,7 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
                     Log.d("ERROR: ", t.getMessage());
                 }
             });
+
         }
 
         desactivarCampos();
@@ -200,71 +166,6 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
         etDetalleTicket.setClickable(false);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mapSede != null) {
-            mapSede.onResume();
-        }
-
-        mapSede.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_MOVE:
-                        nsvScroll.requestDisallowInterceptTouchEvent(true);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        nsvScroll.requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-                return mapSede.onTouchEvent(motionEvent);
-            }
-        });
-    }
-
-    @Override
-    public void onPause() {
-        if (mapSede != null) {
-            mapSede.onPause();
-        }
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        if (mapSede != null) {
-            try {
-                mapSede.onDestroy();
-            } catch (NullPointerException ex) {
-                Log.e("TAG", "Error while attempting MapView.onDestroy(), ignoring exception", ex);
-            }
-        }
-
-        super.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        if (mapSede != null) {
-            mapSede.onLowMemory();
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mapSede != null) {
-            mapSede.onSaveInstanceState(outState);
-        }
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-    }
 
     @OnClick(R.id.btnAtender)
     public void onClick() {
@@ -303,7 +204,7 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
     }
 
     @OnClick(R.id.btnEsperaRepuesto)
-    public void esperarRepuesto(){
+    public void esperarRepuesto() {
         Ticket ticket = new Ticket();
         ticket.set_nroTicket(oTicket.get_nroTicket());
         ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
@@ -335,8 +236,8 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
     }
 
     @OnClick(R.id.btnRepuesto)
-    public void agregarRepuesto(){
-        Fragment fragment = null;
+    public void agregarRepuesto() {
+        Fragment fragment;
         fragment = new TicketRepuestoFragment();
         Bundle bundleRepuesto = new Bundle();
         bundleRepuesto.putString("nroticket", etNroTicket.getText().toString());
@@ -346,6 +247,65 @@ public class TicketDetalleFragment extends Fragment implements OnMapReadyCallbac
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.replace(R.id.content_frame, fragment).addToBackStack("fragment");
             ft.commit();
+        }
+    }
+
+    @OnClick(R.id.btnVerDireccion)
+    public void verDireccion(){
+        Fragment fragment;
+        fragment = new TicketUbicacionFragment();
+        Bundle bundleDireccion = new Bundle();
+        bundleDireccion.putString("nombreCliente", oTicket.get_cliente().get_razonSocial());
+        bundleDireccion.putString("sedeCliente", oTicket.get_sede().get_nombre());
+        bundleDireccion.putString("latitud", oTicket.get_sede().get_latitud());
+        bundleDireccion.putString("longitud", oTicket.get_sede().get_longitud());
+        bundleDireccion.putString("direccionSede", oTicket.get_sede().get_direccion());
+        bundleDireccion.putString("contactoSede", oTicket.get_sede().get_nombreContacto());
+        bundleDireccion.putString("usuarioAtencion", oTicket.get_usuarioSede().get_nombre());
+
+        fragment.setArguments(bundleDireccion);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment).addToBackStack("fragmentDireccion");
+        ft.commit();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (oTicket != null && oTicket.get_idEstadoTicket() == 2){
+            Ticket ticket = new Ticket();
+            ticket.set_nroTicket(oTicket.get_nroTicket());
+            ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
+            ticket.set_idEstadoTicket(3);
+
+            TicketsApiWs ticketsApiWs2 = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
+            Call<ResponseBody> respuesta2 = ticketsApiWs2.AtenderTicket(ticket);
+
+            respuesta2.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.code() == 200) {
+                        Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket marcado como Recibido", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                        etEstadoTicket.setText("RECIBIDO");
+                        //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
         }
     }
 }

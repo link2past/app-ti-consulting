@@ -48,4 +48,9 @@
     <string name="urlserver">URL del Servidor</string>
     <string name="guardarconfig">Guardar Configuración</string>
     <string name="configuracion">Configuración</string>
+    <string name="direccionsede">Dirección de la Sede</string>
+    <string name="contactosede">Contacto de la Sede</string>
+    <string name="usuarioatencion">Usuario para Atención</string>
+    <string name="regresar">Regresar</string>
+    <string name="verdireccion">Ver Dirección</string>
 </resources>
