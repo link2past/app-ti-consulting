@@ -3,6 +3,7 @@ package com.oalvarez.appticonsulting.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import com.oalvarez.appticonsulting.servicios.HelperWs;
 import com.oalvarez.appticonsulting.servicios.TicketsApiWs;
 import com.oalvarez.appticonsulting.util.Listas;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -33,6 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -142,6 +145,32 @@ public class TicketFragment extends Fragment {
                         Ticket ticket = new Ticket();
                         ticket = listaTickets.get(position);
 
+
+
+                        if (ticket != null && ticket.get_idEstadoTicket() == 2){
+                            Ticket ticket1 = new Ticket();
+                            ticket1.set_nroTicket(ticket.get_nroTicket());
+                            ticket1.set_usuarioAsignado(ticket.get_usuarioAsignado());
+                            ticket1.set_idEstadoTicket(3);
+
+                            TicketsApiWs ticketsApiWs2 = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
+                            Call<ResponseBody> respuesta2 = ticketsApiWs2.AtenderTicket(ticket1);
+                            respuesta2.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.code()==200){
+                                        Toast.makeText(getActivity(), "Ticket marcado como RECIBIDO", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                }
+                            });
+                        }
+
+
                         Fragment fragment = null;
 
                         fragment = new TicketDetalleFragment();
@@ -160,7 +189,7 @@ public class TicketFragment extends Fragment {
                         }
 
 
-                        Toast.makeText(getActivity(), "Ticket: " + ticket.get_titulo(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Ticket: " + ticket.get_titulo(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

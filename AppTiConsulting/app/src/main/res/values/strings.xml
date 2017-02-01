@@ -53,4 +53,14 @@
     <string name="usuarioatencion">Usuario para Atención</string>
     <string name="regresar">Regresar</string>
     <string name="verdireccion">Ver Dirección</string>
+
+    <string name="estadoIngresado">INGRESADO</string>
+    <string name="estadoAsignado">ASIGNADO</string>
+    <string name="estadoRecibido">RECIBIDO</string>
+    <string name="estadoAtendido">ATENDIDO</string>
+    <string name="estadoCerrado">CERRADO</string>
+    <string name="estadoEsperaRep">EN ESPERA DE REPUESTO</string>
+    <string name="estadoAnulado">ANULADO</string>
+    <string name="observacionticket">Observaciones</string>
+    <string name="ordenServicioticket">Orden de Servicio</string>
 </resources>

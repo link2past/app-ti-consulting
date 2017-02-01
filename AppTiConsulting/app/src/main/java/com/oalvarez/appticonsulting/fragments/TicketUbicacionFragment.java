@@ -89,12 +89,26 @@ public class TicketUbicacionFragment extends Fragment implements OnMapReadyCallb
                 }
             });
 
+            desactivarCampos();
+
         }
 
 
 
         return view;
     }
+
+    private void desactivarCampos() {
+        etDireccionSede.setFocusable(false);
+        etDireccionSede.setClickable(false);
+
+        etUsuarioAtencion.setFocusable(false);
+        etUsuarioAtencion.setClickable(false);
+
+        etContactoSede.setFocusable(false);
+        etContactoSede.setClickable(false);
+    }
+
 
     @OnClick(R.id.btnRegresar)
     public void onClick() {

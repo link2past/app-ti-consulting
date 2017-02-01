@@ -81,6 +81,14 @@ public class TicketDetalleFragment extends Fragment {
     CoordinatorLayout layoutTicketDetalle;
     @BindView(R.id.btnVerDireccion)
     Button btnVerDireccion;
+    @BindView(R.id.etObservacionTicket)
+    EditText etObservacionTicket;
+    @BindView(R.id.tilObservacionTicket)
+    TextInputLayout tilObservacionTicket;
+    @BindView(R.id.etOrdenServicioTicket)
+    EditText etOrdenServicioTicket;
+    @BindView(R.id.tilOrdenServicioTicket)
+    TextInputLayout tilOrdenServicioTicket;
 
     private Ticket oTicket;
 
@@ -102,8 +110,6 @@ public class TicketDetalleFragment extends Fragment {
             etNroTicket.setText(String.valueOf(nroTicket));
 
 
-
-
             TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
             Call<Ticket> respuesta = ticketsApiWs.ConsultarTicket(nroTicket);
 
@@ -116,7 +122,12 @@ public class TicketDetalleFragment extends Fragment {
 
                         etNroTicket.setText(String.valueOf(oTicket.get_nroTicket()));
 
-                        etEstadoTicket.setText(oTicket.get_estadoTicket().get_descripcion());
+                        if (oTicket.get_idEstadoTicket() == 2) {
+                            etEstadoTicket.setText(getString(R.string.estadoRecibido));
+                        } else {
+                            etEstadoTicket.setText(oTicket.get_estadoTicket().get_descripcion());
+                        }
+
                         etClienteTicket.setText(oTicket.get_cliente().get_razonSocial());
                         etSedeTicket.setText(oTicket.get_sede().get_nombre());
                         etTituloTicket.setText(oTicket.get_titulo());
@@ -169,19 +180,14 @@ public class TicketDetalleFragment extends Fragment {
 
     @OnClick(R.id.btnAtender)
     public void onClick() {
-//        Toast.makeText(getActivity(), "FAB",Toast.LENGTH_SHORT).show();
+
         Ticket ticket = new Ticket();
         ticket.set_nroTicket(oTicket.get_nroTicket());
         ticket.set_solucion(etSolucionTicket.getText().toString());
-        ticket.set_observaciones("");
-        ticket.set_ordenServicio("");
+        ticket.set_observaciones(etObservacionTicket.getText().toString());
+        ticket.set_ordenServicio(etOrdenServicioTicket.getText().toString());
         ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
         ticket.set_idEstadoTicket(4);
-
-        //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        //String sJson = gson.toJson(ticket);
-        //etSolucionTicket.setText(sJson);
-        //Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
 
         TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
         Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
@@ -192,7 +198,8 @@ public class TicketDetalleFragment extends Fragment {
                 if (response.code() == 200) {
                     Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket Atendido", Snackbar.LENGTH_LONG);
                     snackbar.show();
-                    //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
+                    etEstadoTicket.setText(getString(R.string.estadoAtendido));
+
                 }
             }
 
@@ -224,6 +231,7 @@ public class TicketDetalleFragment extends Fragment {
                 if (response.code() == 200) {
                     Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket En Espera de Repuesto", Snackbar.LENGTH_LONG);
                     snackbar.show();
+                    etEstadoTicket.setText(getString(R.string.estadoEsperaRep));
                     //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -243,15 +251,13 @@ public class TicketDetalleFragment extends Fragment {
         bundleRepuesto.putString("nroticket", etNroTicket.getText().toString());
         fragment.setArguments(bundleRepuesto);
 
-        if (fragment != null) {
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment).addToBackStack("fragment");
-            ft.commit();
-        }
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment).addToBackStack("fragment");
+        ft.commit();
     }
 
     @OnClick(R.id.btnVerDireccion)
-    public void verDireccion(){
+    public void verDireccion() {
         Fragment fragment;
         fragment = new TicketUbicacionFragment();
         Bundle bundleDireccion = new Bundle();
@@ -281,31 +287,6 @@ public class TicketDetalleFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (oTicket != null && oTicket.get_idEstadoTicket() == 2){
-            Ticket ticket = new Ticket();
-            ticket.set_nroTicket(oTicket.get_nroTicket());
-            ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
-            ticket.set_idEstadoTicket(3);
 
-            TicketsApiWs ticketsApiWs2 = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
-            Call<ResponseBody> respuesta2 = ticketsApiWs2.AtenderTicket(ticket);
-
-            respuesta2.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.code() == 200) {
-                        Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket marcado como Recibido", Snackbar.LENGTH_LONG);
-                        snackbar.show();
-                        etEstadoTicket.setText("RECIBIDO");
-                        //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                }
-            });
-        }
     }
 }

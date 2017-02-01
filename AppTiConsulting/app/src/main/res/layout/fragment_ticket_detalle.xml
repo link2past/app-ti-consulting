@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="5dp">
+                android:padding="3dp">
 
                 <!--com.google.android.gms.maps.MapView
                     android:id="@+id/mapSede"
@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:focusableInTouchMode="true"
                     android:orientation="horizontal"
-                    android:padding="3dp">
+                    android:padding="2dp">
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/tilNroTicket"
@@ -84,7 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="3dp">
+                    android:padding="2dp">
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/tilClienteTicket"
@@ -106,7 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="3dp">
+                    android:padding="2dp">
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/tilSedeTicket"
@@ -134,7 +134,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="3dp">
+                    android:padding="2dp">
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/tilFechaTicket"
@@ -177,7 +177,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="3dp">
+                    android:padding="2dp">
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/tilDetalleTicket"
@@ -198,7 +198,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="3dp">
+                    android:padding="2dp">
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/tilSolucionTicket"
@@ -220,7 +220,51 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_horizontal">
+                    android:padding="2dp">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/tilObservacionTicket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/etObservacionTicket"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/observacionticket"
+                            android:inputType="textMultiLine"
+                            android:textSize="16sp" />
+
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="2dp">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/tilOrdenServicioTicket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/etOrdenServicioTicket"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/ordenServicioticket"
+                            android:textSize="16sp" />
+
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    android:padding="2dp">
 
                     <Button
                         android:layout_width="wrap_content"
