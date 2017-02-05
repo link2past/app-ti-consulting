@@ -17,7 +17,7 @@
             android:text="@string/ticketsasignados"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/secondaryText"/>
+            android:textColor="@color/colorPrimaryDark"/>
 
         <LinearLayout
             android:layout_width="match_parent"
