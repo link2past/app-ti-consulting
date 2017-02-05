@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.oalvarez.appticonsulting.entidades.SessionManager;
 import com.oalvarez.appticonsulting.fragments.LiquidacionFragment;
+import com.oalvarez.appticonsulting.fragments.PerfilFragment;
 import com.oalvarez.appticonsulting.fragments.TicketDetalleFragment;
 import com.oalvarez.appticonsulting.fragments.TicketFragment;
 
@@ -80,12 +81,13 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
         //creating fragment object
         Fragment fragment = null;
+        Bundle bundleFragment = null;
 
         //initializing the fragment object which is selected
         switch (itemId) {
             case R.id.navTickets:
                 fragment = new TicketFragment();
-                Bundle bundleFragment = new Bundle();
+                bundleFragment = new Bundle();
                 bundleFragment.putString("idusuario", sIdUsuario);
                 bundleFragment.putInt("idtipousuario", nIdTipoUsuario);
                 fragment.setArguments(bundleFragment);
@@ -93,8 +95,11 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
                 break;
             case R.id.navPerfil:
                 //fragment = new Menu2();
-                fragment = new TicketDetalleFragment();
-                toolbar.setTitle("Detalle de Tickets");
+                fragment = new PerfilFragment();
+                bundleFragment = new Bundle();
+                bundleFragment.putString("idusuario", sIdUsuario);
+                fragment.setArguments(bundleFragment);
+                toolbar.setTitle("Perfil de Usuario");
                 break;
             case R.id.navLiquidacion:
                 fragment = new LiquidacionFragment();

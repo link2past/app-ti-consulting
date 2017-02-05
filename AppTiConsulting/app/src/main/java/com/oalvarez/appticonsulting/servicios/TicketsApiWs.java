@@ -24,6 +24,13 @@ public interface TicketsApiWs {
     @POST("usuario")
     Call<Token> Login(@Body Usuario usuario);
 
+    @GET("usuario/{id}")
+    Call<Usuario> ConsultarUsuario(@Path("id") String sIdUsuario);
+
+    @Headers({"Accept: application/json", "Content-Type: application/json"})
+    @POST("usuario/{accion}/{id}")
+    Call<ResponseBody> ActualizarUsuario(@Path("accion") String sAccion,  @Path("id") String sId, @Body Usuario usuario);
+
     //endregion
 
     //region Métodos de tickets

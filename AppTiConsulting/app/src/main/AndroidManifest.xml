@@ -36,7 +36,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="@string/api_fabric" />
+            android:value="3bc7c7df773981a35f691f3cd79a9c1a21e6af1a" />
 
         <activity android:name=".SettingsActivity"></activity>
     </application>

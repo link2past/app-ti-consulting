@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity {
 
             Token token = sessionManager.obtenerDatosSesion();
             Intent intent = new Intent(MainActivity.this, NavigationActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra("idusuario", token.get_idUsuario());
             intent.putExtra("nombreusuario", token.get_usuario().get_nombre());
             intent.putExtra("idtipousuario", token.get_usuario().get_idTipoUsuario());
@@ -129,7 +129,7 @@ public class MainActivity extends BaseActivity {
                                 oToken.get_token());
 
                         Intent intent = new Intent(MainActivity.this, NavigationActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.putExtra("idusuario", oToken.get_idUsuario());
                         intent.putExtra("nombreusuario", oToken.get_usuario().get_nombre());
                         intent.putExtra("idtipousuario", oToken.get_usuario().get_idTipoUsuario());

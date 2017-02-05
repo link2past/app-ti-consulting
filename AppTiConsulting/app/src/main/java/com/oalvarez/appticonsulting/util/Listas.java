@@ -48,7 +48,7 @@ public class Listas {
                     .findAllSorted("idEstadoTicket", Sort.ASCENDING);
         }else
         {
-            realm
+            realmResults = realm
                 .where(EstadoTicketDb.class)
                 .findAllSorted("idEstadoTicket", Sort.ASCENDING);
         }

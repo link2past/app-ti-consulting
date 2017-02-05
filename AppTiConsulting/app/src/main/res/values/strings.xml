@@ -26,7 +26,7 @@
 
     <string name="api_map">AIzaSyAHQ1gxeb00CEwpk7JMKHaJYYVCAHCbwq4</string>
     <string name="api_fabric">3bc7c7df773981a35f691f3cd79a9c1a21e6af1a</string>
-    <string name="default_web_api_url">http://192.168.10.189/webapitickets/api/</string>
+    <string name="default_web_api_url">http://192.168.1.5/webapitickets/api/</string>
 
 
     <string name="tituloticket">Título</string>
@@ -63,4 +63,11 @@
     <string name="estadoAnulado">ANULADO</string>
     <string name="observacionticket">Observaciones</string>
     <string name="ordenServicioticket">Orden de Servicio</string>
+    <string name="nombreusuario">Nombre del Usuario</string>
+    <string name="perfilusuario">Perfil del Usuario</string>
+    <string name="correousuario">Correo Electrónico del Usuario</string>
+    <string name="cambiarcontrasena">Cambiar Contraseña</string>
+    <string name="nuevacontrasena">Nueva Contraseña</string>
+    <string name="repetircontrasena">Repetir Contraseña</string>
+    <string name="guardarcambiosperfil">Guardar Cambios de Perfil</string>
 </resources>
