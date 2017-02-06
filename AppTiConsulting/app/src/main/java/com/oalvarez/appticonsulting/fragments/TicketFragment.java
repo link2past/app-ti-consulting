@@ -3,7 +3,6 @@ package com.oalvarez.appticonsulting.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,13 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.oalvarez.appticonsulting.R;
 import com.oalvarez.appticonsulting.adapter.TicketAdapter;
-import com.oalvarez.appticonsulting.database.EstadoTicketDb;
-import com.oalvarez.appticonsulting.entidades.EstadoTicket;
 import com.oalvarez.appticonsulting.entidades.Ticket;
 import com.oalvarez.appticonsulting.events.ClickListener;
 import com.oalvarez.appticonsulting.events.RecyclerTouchListener;
@@ -27,14 +25,11 @@ import com.oalvarez.appticonsulting.servicios.HelperWs;
 import com.oalvarez.appticonsulting.servicios.TicketsApiWs;
 import com.oalvarez.appticonsulting.util.Listas;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
-import io.realm.RealmResults;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,6 +47,8 @@ public class TicketFragment extends Fragment {
     FloatingActionButton fabActualizar;
     @BindView(R.id.spEstadoTicket)
     Spinner spEstadoTicket;
+    @BindView(R.id.btnRegistrarTicket)
+    Button btnRegistrarTicket;
 
     private ArrayList<Ticket> listaTickets = new ArrayList<>();
     public TicketAdapter adapter;
@@ -117,10 +114,20 @@ public class TicketFragment extends Fragment {
     public void onClick() {
     }
 
+    @OnClick(R.id.btnRegistrarTicket)
+    public void registrarTicket() {
+        Fragment fragment = null;
+
+        fragment = new TicketRegistroFragment();
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment).addToBackStack("fragment");
+        ft.commit();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-
 
 
         spEstadoTicket.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -146,8 +153,7 @@ public class TicketFragment extends Fragment {
                         ticket = listaTickets.get(position);
 
 
-
-                        if (ticket != null && ticket.get_idEstadoTicket() == 2){
+                        if (ticket != null && ticket.get_idEstadoTicket() == 2) {
                             Ticket ticket1 = new Ticket();
                             ticket1.set_nroTicket(ticket.get_nroTicket());
                             ticket1.set_usuarioAsignado(ticket.get_usuarioAsignado());
@@ -158,7 +164,7 @@ public class TicketFragment extends Fragment {
                             respuesta2.enqueue(new Callback<ResponseBody>() {
                                 @Override
                                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                    if (response.code()==200){
+                                    if (response.code() == 200) {
                                         Toast.makeText(getActivity(), "Ticket marcado como RECIBIDO", Toast.LENGTH_SHORT).show();
                                     }
                                 }

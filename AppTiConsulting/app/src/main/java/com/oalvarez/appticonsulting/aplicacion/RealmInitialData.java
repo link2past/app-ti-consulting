@@ -1,6 +1,7 @@
 package com.oalvarez.appticonsulting.aplicacion;
 
 import com.oalvarez.appticonsulting.database.EstadoTicketDb;
+import com.oalvarez.appticonsulting.database.NivelUrgenciaDb;
 
 import io.realm.Realm;
 
@@ -11,6 +12,8 @@ import io.realm.Realm;
 public class RealmInitialData implements Realm.Transaction {
     @Override
     public void execute(Realm realm) {
+
+        //Estado Ticket
         EstadoTicketDb estadoTicketDb = new EstadoTicketDb();
 
         estadoTicketDb.setIdEstadoTicket(1);
@@ -40,6 +43,29 @@ public class RealmInitialData implements Realm.Transaction {
         estadoTicketDb.setIdEstadoTicket(7);
         estadoTicketDb.setDescripcion("ANULADO");
         realm.insertOrUpdate(estadoTicketDb);
+
+        //Nivel Urgencia
+        NivelUrgenciaDb nivelUrgenciaDb = new NivelUrgenciaDb();
+
+        nivelUrgenciaDb.setIdNivelUrgencia(1);
+        nivelUrgenciaDb.setDescripcion("BAJO");
+        realm.insertOrUpdate(nivelUrgenciaDb);
+
+        nivelUrgenciaDb.setIdNivelUrgencia(2);
+        nivelUrgenciaDb.setDescripcion("MEDIO - BAJO");
+        realm.insertOrUpdate(nivelUrgenciaDb);
+
+        nivelUrgenciaDb.setIdNivelUrgencia(3);
+        nivelUrgenciaDb.setDescripcion("MEDIO");
+        realm.insertOrUpdate(nivelUrgenciaDb);
+
+        nivelUrgenciaDb.setIdNivelUrgencia(4);
+        nivelUrgenciaDb.setDescripcion("MEDIO - ALTO");
+        realm.insertOrUpdate(nivelUrgenciaDb);
+
+        nivelUrgenciaDb.setIdNivelUrgencia(5);
+        nivelUrgenciaDb.setDescripcion("ALTO");
+        realm.insertOrUpdate(nivelUrgenciaDb);
     }
 
     @Override

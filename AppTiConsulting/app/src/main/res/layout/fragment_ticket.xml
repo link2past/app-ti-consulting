@@ -25,14 +25,23 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.2"
                 android:text="@string/filtro"/>
 
             <Spinner
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.5"
                 android:id="@+id/spEstadoTicket"></Spinner>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:id="@+id/btnRegistrarTicket"
+                android:text="@string/registrarticket"/>
 
         </LinearLayout>
 

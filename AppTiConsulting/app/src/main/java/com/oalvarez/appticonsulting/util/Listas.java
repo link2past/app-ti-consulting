@@ -4,10 +4,13 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.oalvarez.appticonsulting.database.EstadoTicketDb;
+import com.oalvarez.appticonsulting.database.NivelUrgenciaDb;
 import com.oalvarez.appticonsulting.entidades.EstadoTicket;
+import com.oalvarez.appticonsulting.entidades.NivelUrgencia;
 import com.oalvarez.appticonsulting.servicios.HelperWs;
 import com.oalvarez.appticonsulting.servicios.TicketsApiWs;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 
 import io.realm.Realm;
@@ -54,6 +57,24 @@ public class Listas {
         }
 
         for (EstadoTicketDb item: realmResults) {
+            tabla.add(item.getDescripcion());
+        }
+
+        return tabla;
+    }
+
+    public ArrayList<String> listarNivelUrgenciaDb(){
+        ArrayList<String> tabla = new ArrayList<>();
+
+        Realm realm = Realm.getDefaultInstance();
+
+        RealmResults<NivelUrgenciaDb> realmResults = null;
+
+        realmResults = realm
+                .where(NivelUrgenciaDb.class)
+                .findAllSorted("idNivelUrgencia", Sort.ASCENDING);
+
+        for (NivelUrgenciaDb item: realmResults) {
             tabla.add(item.getDescripcion());
         }
 

@@ -56,8 +56,25 @@ public interface TicketsApiWs {
 
     //endregion
 
-    //region Métodos de Estado de Tickets
+    //region Métodos de Listas
     @GET("estadoticket")
     Call<ArrayList<EstadoTicket>> ListarEstadoTicket();
+
+    @GET("categoriaproblema")
+    Call<ArrayList<CategoriaProblema>> ListarCategoriaProblema();
+    //endregion
+
+    //region Métodos de Clientes
+    @GET("cliente")
+    Call<ArrayList<Cliente>> ListarClientes();
+
+    @GET("unidadnegocio/{id}")
+    Call<ArrayList<UnidadNegocio>> ListarUnidadNegocioCliente(@Path("id") String sIdCliente);
+
+    @GET("sede/{accion}/{id}")
+    Call<ArrayList<SedeCliente>> ListarSedePorUn(@Path("accion") String sIdCliente, @Path("id") int nIdUnidadNegocio);
+
+    @GET("usuariosede/{id}")
+    Call<ArrayList<UsuarioSede>> ListarUsuarioSede(@Path("id") int nIdSede);
     //endregion
 }
