@@ -76,4 +76,6 @@
     <string name="nivelurgencia">Nivel de Urgencia</string>
     <string name="nroticketcliente">Nro. de Ticket del Cliente</string>
     <string name="registrarticket">Registrar Ticket</string>
+    <string name="fechaticketreg">Fecha de Ticket (dd/mm/yyyy)</string>
+    <string name="grabar">Grabar</string>
 </resources>

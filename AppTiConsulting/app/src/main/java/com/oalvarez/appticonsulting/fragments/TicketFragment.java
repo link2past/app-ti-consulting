@@ -54,6 +54,9 @@ public class TicketFragment extends Fragment {
     public TicketAdapter adapter;
     private ArrayList<String> alEstadoTicket = new ArrayList<>();
 
+    private String sIdUsuario;
+    private int nIdTipoUsuario;
+
     public TicketFragment() {
         // Required empty public constructor
     }
@@ -70,8 +73,8 @@ public class TicketFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
 
-            String sIdUsuario = bundle.getString("idusuario");
-            int nIdTipoUsuario = bundle.getInt("idtipousuario");
+            sIdUsuario = bundle.getString("idusuario");
+            nIdTipoUsuario = bundle.getInt("idtipousuario");
 
             alEstadoTicket = new Listas().listarEstadoTicketDb(nIdTipoUsuario);
 
@@ -119,6 +122,9 @@ public class TicketFragment extends Fragment {
         Fragment fragment = null;
 
         fragment = new TicketRegistroFragment();
+        Bundle bundleFragment = new Bundle();
+        bundleFragment.putString("idusuario", sIdUsuario);
+        fragment.setArguments(bundleFragment);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment).addToBackStack("fragment");

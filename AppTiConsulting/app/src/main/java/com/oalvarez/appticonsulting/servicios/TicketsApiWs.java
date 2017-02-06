@@ -54,6 +54,9 @@ public interface TicketsApiWs {
     @GET("repuesto/{id}")
     Call<ArrayList<Repuesto>> BuscarRepuesto(@Path("id") String id);
 
+    @Headers({"Accept: application/json", "Content-Type: application/json"})
+    @POST("ticket/{id}")
+    Call<RespuestaCodigo> RegistrarTicket(@Path("id") String id, @Body Ticket ticket);
     //endregion
 
     //region Métodos de Listas
