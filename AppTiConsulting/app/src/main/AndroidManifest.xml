@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.oalvarez.appticonsulting">
+    package="com.oalvarez.appticonsulting1">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -8,14 +8,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".aplicacion.Configuracion"
+        android:name="com.oalvarez.appticonsulting1.aplicacion.Configuracion"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.oalvarez.appticonsulting1.MainActivity"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,9 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ContenidoActivity" />
+        <activity android:name="com.oalvarez.appticonsulting1.ContenidoActivity" />
         <activity
-            android:name=".NavigationActivity"
+            android:name="com.oalvarez.appticonsulting1.NavigationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
@@ -38,7 +38,7 @@
             android:name="io.fabric.ApiKey"
             android:value="3bc7c7df773981a35f691f3cd79a9c1a21e6af1a" />
 
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name="com.oalvarez.appticonsulting1.SettingsActivity"></activity>
     </application>
 
 </manifest>

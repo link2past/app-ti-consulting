@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/layoutTicketDetalle"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.oalvarez.appticonsulting.fragments.TicketDetalleFragment">
+    tools:context="com.oalvarez.appticonsulting1.fragments.TicketDetalleFragment">
 
         <!--<android.support.design.widget.AppBarLayout-->
             <!--android:layout_width="match_parent"-->

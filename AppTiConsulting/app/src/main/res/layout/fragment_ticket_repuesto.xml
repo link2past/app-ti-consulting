@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.oalvarez.appticonsulting.fragments.TicketRepuestoFragment">
+    tools:context="com.oalvarez.appticonsulting1.fragments.TicketRepuestoFragment">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
