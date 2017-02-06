@@ -21,7 +21,7 @@
                 android:text="@string/ticketrepuestos"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/secondaryText"/>
+                android:textColor="@color/colorPrimaryDark"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                     android:text="@string/agregarrepuestos"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="@color/secondaryText"/>
+                    android:textColor="@color/colorPrimaryDark"/>
 
                 <Space
                     android:layout_width="match_parent"
@@ -76,6 +76,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/etBuscarRepuesto"
+                            android:textSize="16sp"
                             android:hint="@string/buscarrepuesto"/>
 
                     </android.support.design.widget.TextInputLayout>
