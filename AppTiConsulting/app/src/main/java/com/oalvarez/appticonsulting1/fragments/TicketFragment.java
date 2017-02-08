@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -43,12 +44,12 @@ public class TicketFragment extends Fragment {
 
     @BindView(R.id.rvTicketsAsignados)
     RecyclerView rvTicketsAsignados;
-    @BindView(R.id.fabActualizar)
-    FloatingActionButton fabActualizar;
     @BindView(R.id.spEstadoTicket)
     Spinner spEstadoTicket;
     @BindView(R.id.btnRegistrarTicket)
     Button btnRegistrarTicket;
+    @BindView(R.id.pbListaTicket)
+    ProgressBar pbListaTicket;
 
     private ArrayList<Ticket> listaTickets = new ArrayList<>();
     public TicketAdapter adapter;
@@ -86,6 +87,9 @@ public class TicketFragment extends Fragment {
             String sUsuario = sIdUsuario;
             Call<ArrayList<Ticket>> respuesta = ticketsApiWs.ConsultarTicketsAsignados("asignado", sUsuario);
 
+            pbListaTicket.setIndeterminate(true);
+            pbListaTicket.setVisibility(View.VISIBLE);
+
             respuesta.enqueue(new Callback<ArrayList<Ticket>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Ticket>> call, Response<ArrayList<Ticket>> response) {
@@ -96,7 +100,9 @@ public class TicketFragment extends Fragment {
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                         rvTicketsAsignados.setLayoutManager(layoutManager);
                         rvTicketsAsignados.setAdapter(adapter);
+                        pbListaTicket.setVisibility(View.INVISIBLE);
                     } else {
+                        pbListaTicket.setVisibility(View.INVISIBLE);
                         Toast.makeText(getActivity(), "El usuario no tiene tickets asignados", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -109,12 +115,7 @@ public class TicketFragment extends Fragment {
 
         }
 
-
         return view;
-    }
-
-    @OnClick(R.id.fabActualizar)
-    public void onClick() {
     }
 
     @OnClick(R.id.btnRegistrarTicket)
@@ -140,7 +141,7 @@ public class TicketFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String sItem = alEstadoTicket.get(i);
-                Toast.makeText(getActivity(), sItem, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), sItem, Toast.LENGTH_SHORT).show();
             }
 
             @Override

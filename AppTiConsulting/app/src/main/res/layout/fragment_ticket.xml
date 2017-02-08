@@ -33,13 +33,13 @@
             <Spinner
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="0.4"
                 android:id="@+id/spEstadoTicket"></Spinner>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"
+                android:layout_weight="0.4"
                 android:id="@+id/btnRegistrarTicket"
                 android:text="@string/registrarticket"/>
 
@@ -48,6 +48,7 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="5dp" />
+
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
@@ -60,13 +61,13 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/pbListaTicket"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_menu_rotate"
-        android:id="@+id/fabActualizar"
-        />
+        android:indeterminateDrawable="@drawable/progress_bar"
+        android:visibility="invisible" />
+
 
 </android.support.design.widget.CoordinatorLayout>

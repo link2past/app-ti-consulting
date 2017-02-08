@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         sessionManager = new SessionManager(MainActivity.this);
-        Toast.makeText(MainActivity.this, "User Login Status: " + sessionManager.estaLogeado(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(MainActivity.this, "User Login Status: " + sessionManager.estaLogeado(), Toast.LENGTH_LONG).show();
 
         if (sessionManager.estaLogeado()) {
 
