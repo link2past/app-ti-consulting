@@ -3,6 +3,7 @@ package com.oalvarez.appticonsulting1.fragments;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
@@ -34,6 +35,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,22 +86,22 @@ public class TicketRegistroFragment extends Fragment {
     NestedScrollView nsvScroll;
 
     private ArrayList<Cliente> alCliente = new ArrayList<>();
-    private String sIdClienteSeleccionado;
+    private String sIdClienteSeleccionado = "-1";
 
     private ArrayList<UnidadNegocio> alUnidadNegocio = new ArrayList<>();
-    private int nIdUnidadNegocioSeleccionada;
+    private int nIdUnidadNegocioSeleccionada = -1;
 
     private ArrayList<SedeCliente> alSedeCliente = new ArrayList<>();
-    private int nIdSedeSeleccionada;
+    private int nIdSedeSeleccionada = -1;
 
     private ArrayList<UsuarioSede> alUsuarioSede = new ArrayList<>();
-    private int nIdUsuarioSedeSeleccionado;
+    private int nIdUsuarioSedeSeleccionado = -1;
 
     private ArrayList<CategoriaProblema> alCategoriaProblema = new ArrayList<>();
-    private int nIdCategoriaProblemaSeleccionada;
+    private int nIdCategoriaProblemaSeleccionada = -1;
 
     private ArrayList<String> alNivelUrgencia = new ArrayList<>();
-    private int nIdNivelUrgencia;
+    private int nIdNivelUrgencia = -1;
 
     private int nAnio, nMes, nDia;
     private String sIdUsuario;
@@ -178,14 +180,72 @@ public class TicketRegistroFragment extends Fragment {
     @OnClick(R.id.btnGrabarTicket)
     public void grabarTicket() {
 
+        if (sIdClienteSeleccionado.equals("-1")){
+            Snackbar snackbar = Snackbar.make(nsvScroll, "Debe seleccionar el cliente", Snackbar.LENGTH_LONG);
+            snackbar.show();
+            spCliente.requestFocus();
+            return;
+        }
+
+        if (nIdUnidadNegocioSeleccionada < 0){
+            Snackbar snackbar = Snackbar.make(nsvScroll, "Debe seleccionar la unidad de negocio", Snackbar.LENGTH_LONG);
+            snackbar.show();
+            spUnidadNegocio.requestFocus();
+            return;
+        }
+
+        if (nIdSedeSeleccionada < 0){
+            Snackbar snackbar = Snackbar.make(nsvScroll, "Debe seleccionar la sede del cliente", Snackbar.LENGTH_LONG);
+            snackbar.show();
+            spSedeCliente.requestFocus();
+            return;
+        }
+
+        if (nIdUsuarioSedeSeleccionado < 0){
+            Snackbar snackbar = Snackbar.make(nsvScroll, "Debe seleccionar el usuario de la sede", Snackbar.LENGTH_LONG);
+            snackbar.show();
+            spUsuarioAtencion.requestFocus();
+            return;
+        }
+
+        if (nIdCategoriaProblemaSeleccionada < 0){
+            Snackbar snackbar = Snackbar.make(nsvScroll, "Debe seleccionar la categoría del problema", Snackbar.LENGTH_LONG);
+            snackbar.show();
+            spCategoria.requestFocus();
+            return;
+        }
+
+        if (etTituloTicket.getText().toString().trim().equals("")){
+            tilTituloTicket.setError("Debe indicar el título del ticket");
+            etTituloTicket.requestFocus();
+            return;
+        }
+        else{
+            tilTituloTicket.setError(null);
+        }
+
+        if (etDetalleTicket.getText().toString().trim().equals("")){
+            etDetalleTicket.setError("Debe indicar el detalle del ticket");
+            etDetalleTicket.requestFocus();
+            return;
+        }
+        else{
+            etDetalleTicket.setError(null);
+        }
+
         Ticket ticket = new Ticket();
         ticket.set_idCliente(Integer.parseInt(sIdClienteSeleccionado));
         ticket.set_idSede(nIdSedeSeleccionada);
-        try {
-            ticket.set_fechaTicket(new SimpleDateFormat("dd/mm/yyyy").parse(etFechaTicket.getText().toString()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
+            //SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
+            //Date date = format.parse(etFechaTicket.getText().toString());
+        Calendar calFechaTicket = Calendar.getInstance();
+        calFechaTicket.set(nAnio, nMes, nDia, 0, 0, 0);
+        Date date = calFechaTicket.getTime();
+        //Date date = new Date()
+
+        ticket.set_fechaTicket(date);
+
         ticket.set_idCategoriaProblema(nIdCategoriaProblemaSeleccionada);
         ticket.set_idNivelUrgencia(nIdNivelUrgencia);
         ticket.set_titulo(etTituloTicket.getText().toString());
@@ -235,7 +295,7 @@ public class TicketRegistroFragment extends Fragment {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
             nAnio = year;
-            nMes = month + 1;
+            nMes = month;
             nDia = dayOfMonth;
 
             StringBuilder sb = new StringBuilder();
@@ -246,10 +306,10 @@ public class TicketRegistroFragment extends Fragment {
             sb.append(nDia);
             sb.append("/");
 
-            if (nMes < 10)
+            if (nMes < 9)
                 sb.append("0");
 
-            sb.append(nMes);
+            sb.append(nMes + 1);
             sb.append("/");
             sb.append(nAnio);
 
