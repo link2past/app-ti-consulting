@@ -110,7 +110,8 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/tilSedeTicket"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
                         android:layout_height="wrap_content">
 
                         <EditText
@@ -121,14 +122,15 @@
                             android:textSize="16sp" />
 
                     </android.support.design.widget.TextInputLayout>
-                </LinearLayout>
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/btnVerDireccion"
-                    android:layout_gravity="right"
-                    android:text="@string/verdireccion"/>
+                    <ImageButton
+                        android:layout_width="0dp"
+                        android:layout_weight="0.2"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/idbtnVerDireccion"
+                        android:src="@drawable/ic_directions_black_24dp"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -259,6 +261,13 @@
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnAtender"
+                    android:drawableLeft="@drawable/ic_check_black_24dp"
+                    android:text="@string/atendido"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -267,24 +276,56 @@
                     android:padding="2dp">
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/btnAtender"
-                        android:text="@string/atendido"/>
-
-                    <Button
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:id="@+id/btnRepuesto"
+                        android:drawableLeft="@drawable/ic_extension_black_24dp"
                         android:text="@string/repuesto" />
 
                     <Button
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:id="@+id/btnEsperaRepuesto"
+                        android:drawableLeft="@drawable/ic_watch_later_black_24dp"
                         android:text="@string/esperarepuesto"/>
 
                 </LinearLayout>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnAsignar"
+                    android:drawableLeft="@drawable/ic_assignment_ind_black_24dp"
+                    android:text="@string/asignar"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    android:padding="2dp">
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnAnular"
+                        android:drawableLeft="@drawable/ic_remove_circle_black_24dp"
+                        android:text="@string/anular" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnCerrar"
+                        android:drawableLeft="@drawable/ic_assignment_turned_in_black_24dp"
+                        android:text="@string/cerrar"/>
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
 

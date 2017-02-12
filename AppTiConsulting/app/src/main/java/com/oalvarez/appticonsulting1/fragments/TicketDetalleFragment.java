@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.oalvarez.appticonsulting1.R;
 import com.oalvarez.appticonsulting1.entidades.Ticket;
@@ -79,8 +80,6 @@ public class TicketDetalleFragment extends Fragment {
     Button btnEsperaRepuesto;
     @BindView(R.id.layoutTicketDetalle)
     CoordinatorLayout layoutTicketDetalle;
-    @BindView(R.id.btnVerDireccion)
-    Button btnVerDireccion;
     @BindView(R.id.etObservacionTicket)
     EditText etObservacionTicket;
     @BindView(R.id.tilObservacionTicket)
@@ -89,8 +88,17 @@ public class TicketDetalleFragment extends Fragment {
     EditText etOrdenServicioTicket;
     @BindView(R.id.tilOrdenServicioTicket)
     TextInputLayout tilOrdenServicioTicket;
+    @BindView(R.id.idbtnVerDireccion)
+    ImageButton idbtnVerDireccion;
+    @BindView(R.id.btnAsignar)
+    Button btnAsignar;
+    @BindView(R.id.btnAnular)
+    Button btnAnular;
+    @BindView(R.id.btnCerrar)
+    Button btnCerrar;
 
     private Ticket oTicket;
+    int nIdTipoUsuario;
 
     public TicketDetalleFragment() {
         // Required empty public constructor
@@ -107,6 +115,7 @@ public class TicketDetalleFragment extends Fragment {
 
         if (bundle != null) {
             int nroTicket = bundle.getInt("nroticket");
+            nIdTipoUsuario = bundle.getInt("idtipousuario");
             etNroTicket.setText(String.valueOf(nroTicket));
 
 
@@ -122,7 +131,7 @@ public class TicketDetalleFragment extends Fragment {
 
                         etNroTicket.setText(String.valueOf(oTicket.get_nroTicket()));
 
-                        if (oTicket.get_idEstadoTicket() == 2) {
+                        if (oTicket.get_idEstadoTicket() == 2 && nIdTipoUsuario == 3) {
                             etEstadoTicket.setText(getString(R.string.estadoRecibido));
                         } else {
                             etEstadoTicket.setText(oTicket.get_estadoTicket().get_descripcion());
@@ -175,6 +184,12 @@ public class TicketDetalleFragment extends Fragment {
 
         etDetalleTicket.setFocusable(false);
         etDetalleTicket.setClickable(false);
+
+        if (nIdTipoUsuario == 3){
+            btnAsignar.setVisibility(View.GONE);
+            btnAnular.setVisibility(View.GONE);
+            btnCerrar.setVisibility(View.GONE);
+        }
     }
 
 
@@ -199,7 +214,6 @@ public class TicketDetalleFragment extends Fragment {
                     Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket Atendido", Snackbar.LENGTH_LONG);
                     snackbar.show();
                     etEstadoTicket.setText(getString(R.string.estadoAtendido));
-
                 }
             }
 
@@ -256,7 +270,86 @@ public class TicketDetalleFragment extends Fragment {
         ft.commit();
     }
 
-    @OnClick(R.id.btnVerDireccion)
+    @OnClick(R.id.btnAsignar)
+    public void asignarTicket(){
+        Fragment fragment;
+        fragment = new AsignarTecnicoFragment();
+        Bundle bundleRepuesto = new Bundle();
+        bundleRepuesto.putString("nroticket", etNroTicket.getText().toString());
+        fragment.setArguments(bundleRepuesto);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment).addToBackStack("asignarfragment");
+        ft.commit();
+    }
+
+    @OnClick(R.id.btnCerrar)
+    public void cerrarTicket(){
+        Ticket ticket = new Ticket();
+        ticket.set_nroTicket(oTicket.get_nroTicket());
+        ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
+        ticket.set_idEstadoTicket(5);
+
+        //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        //String sJson = gson.toJson(ticket);
+        //etSolucionTicket.setText(sJson);
+        //Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
+
+        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
+        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
+
+        respuesta.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code() == 200) {
+                    Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket Cerrado", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    etEstadoTicket.setText(getString(R.string.estadoCerrado));
+                    //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @OnClick(R.id.btnAnular)
+    public void anularTicket(){
+        Ticket ticket = new Ticket();
+        ticket.set_nroTicket(oTicket.get_nroTicket());
+        ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
+        ticket.set_idEstadoTicket(7);
+
+        //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        //String sJson = gson.toJson(ticket);
+        //etSolucionTicket.setText(sJson);
+        //Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
+
+        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
+        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
+
+        respuesta.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code() == 200) {
+                    Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket Anulado", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    etEstadoTicket.setText(getString(R.string.estadoAnulado));
+                    //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @OnClick(R.id.idbtnVerDireccion)
     public void verDireccion() {
         Fragment fragment;
         fragment = new TicketUbicacionFragment();

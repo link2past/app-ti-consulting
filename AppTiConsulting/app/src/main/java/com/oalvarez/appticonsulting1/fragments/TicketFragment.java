@@ -160,7 +160,7 @@ public class TicketFragment extends Fragment {
                         ticket = listaTickets.get(position);
 
 
-                        if (ticket != null && ticket.get_idEstadoTicket() == 2) {
+                        if (ticket != null && ticket.get_idEstadoTicket() == 2 && nIdTipoUsuario == 3) {
                             Ticket ticket1 = new Ticket();
                             ticket1.set_nroTicket(ticket.get_nroTicket());
                             ticket1.set_usuarioAsignado(ticket.get_usuarioAsignado());
@@ -189,6 +189,7 @@ public class TicketFragment extends Fragment {
                         fragment = new TicketDetalleFragment();
                         Bundle bundleFragment = new Bundle();
                         bundleFragment.putInt("nroticket", ticket.get_nroTicket());
+                        bundleFragment.putInt("idtipousuario", nIdTipoUsuario);
                         fragment.setArguments(bundleFragment);
 
 

@@ -26,7 +26,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     android:textStyle="bold"
                     android:textSize="14dp"
                     android:text="@string/nroticket"/>
@@ -34,7 +34,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     android:textSize="14dp"
                     android:id="@+id/tvNroTicket"
                     android:text="@string/nroticket"
@@ -43,7 +43,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.6"
                     android:textSize="14dp"
                     android:textStyle="bold"
                     android:text="@string/estadoticket"
@@ -52,7 +52,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.6"
                     android:textSize="14dp"
                     android:id="@+id/tvEstadoTicket"
                     android:text="@string/estadoticket"
@@ -69,7 +69,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.4"
                     android:text="@string/fechaticket"
                     android:textSize="14dp"
                     android:textStyle="bold"
@@ -79,7 +79,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:textSize="14dp"
                     android:id="@+id/tvFechaTicket"
                     android:text="@string/fechaticket"

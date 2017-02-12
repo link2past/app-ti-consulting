@@ -38,7 +38,7 @@
     <string name="buscarrepuesto">Buscar Repuesto</string>
     <string name="atendido">Atendido</string>
     <string name="repuesto">Repuestos</string>
-    <string name="esperarepuesto">Espera Repuesto</string>
+    <string name="esperarepuesto">Espera Rep.</string>
     <string name="itemdescripcion">Descripción: </string>
     <string name="moneda">Mon</string>
     <string name="preciorep">Precio</string>
@@ -78,4 +78,9 @@
     <string name="registrarticket">Registrar Ticket</string>
     <string name="fechaticketreg">Fecha de Ticket (dd/mm/yyyy)</string>
     <string name="grabar">Grabar</string>
+    <string name="asignar">Asignar Ticket</string>
+    <string name="asignartecnico">Asignar Técnico</string>
+    <string name="buscartecnico">Buscar Técnico</string>
+    <string name="anular">Anular</string>
+    <string name="cerrar">Cerrar</string>
 </resources>

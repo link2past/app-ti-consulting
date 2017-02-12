@@ -31,6 +31,9 @@ public interface TicketsApiWs {
     @POST("usuario/{accion}/{id}")
     Call<ResponseBody> ActualizarUsuario(@Path("accion") String sAccion,  @Path("id") String sId, @Body Usuario usuario);
 
+    @GET("usuario/{accion}/{id}")
+    Call<ArrayList<Usuario>> ListarUsuario(@Path("accion") int nIdTipoUsuario, @Path("id") String sNombreUsuario);
+
     //endregion
 
     //region Métodos de tickets
