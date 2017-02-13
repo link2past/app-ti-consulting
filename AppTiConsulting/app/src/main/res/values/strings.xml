@@ -83,4 +83,6 @@
     <string name="buscartecnico">Buscar Técnico</string>
     <string name="anular">Anular</string>
     <string name="cerrar">Cerrar</string>
+
+    <string name="tituloAlertaConfirmacion">Confirmación</string>
 </resources>

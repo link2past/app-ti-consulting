@@ -1,8 +1,10 @@
 package com.oalvarez.appticonsulting1.fragments;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -79,32 +81,54 @@ public class AsignarTecnicoFragment extends Fragment {
                 new ClickListener() {
                     @Override
                     public void onClick(View view, int position) {
-                        Usuario usuario = listaUsuarioBusqueda.get(position);
+                        final Usuario usuario = listaUsuarioBusqueda.get(position);
                         //Toast.makeText(getActivity(), usuario.get_nombre(), Toast.LENGTH_SHORT).show();
 
-                        Ticket ticket = new Ticket();
-                        ticket.set_nroTicket(nNroTicket);
-                        ticket.set_idUsuarioAsignado(usuario.get_usuario());
-                        ticket.set_idUsuario("JCACERES");
-                        ticket.set_idEstadoTicket(2);
+                        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+                        alertBuilder.setTitle(getString(R.string.tituloAlertaConfirmacion));
+                        alertBuilder.setMessage("¿Está seguro de asignar al usuario " + usuario.get_nombre() + " al ticket?");
 
-                        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
-                        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
+                        alertBuilder
+                                .setCancelable(true)
+                                .setPositiveButton("Asignar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Ticket ticket = new Ticket();
+                                        ticket.set_nroTicket(nNroTicket);
+                                        ticket.set_idUsuarioAsignado(usuario.get_usuario());
+                                        ticket.set_idUsuario("JCACERES");
+                                        ticket.set_idEstadoTicket(2);
 
-                        respuesta.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                if (response.code() == 200){
-                                    Toast.makeText(getActivity(), "Se asignó el técnico al ticket",Toast.LENGTH_SHORT).show();
-                                    getFragmentManager().popBackStack();
-                                }
-                            }
+                                        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
+                                        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
 
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        respuesta.enqueue(new Callback<ResponseBody>() {
+                                            @Override
+                                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                if (response.code() == 200){
+                                                    Toast.makeText(getActivity(), "Se asignó el técnico al ticket",Toast.LENGTH_SHORT).show();
+                                                    getFragmentManager().popBackStack();
+                                                }
+                                            }
 
-                            }
-                        });
+                                            @Override
+                                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                            }
+                                        });
+                                    }
+                                })
+                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+
+                        AlertDialog alert = alertBuilder.create();
+                        alert.show();
+
+
                     }
 
                     @Override

@@ -1,6 +1,7 @@
 package com.oalvarez.appticonsulting1.fragments;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -9,6 +10,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -196,65 +198,107 @@ public class TicketDetalleFragment extends Fragment {
     @OnClick(R.id.btnAtender)
     public void onClick() {
 
-        Ticket ticket = new Ticket();
-        ticket.set_nroTicket(oTicket.get_nroTicket());
-        ticket.set_solucion(etSolucionTicket.getText().toString());
-        ticket.set_observaciones(etObservacionTicket.getText().toString());
-        ticket.set_ordenServicio(etOrdenServicioTicket.getText().toString());
-        ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
-        ticket.set_idEstadoTicket(4);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+        alertBuilder.setTitle(getString(R.string.tituloAlertaConfirmacion));
+        alertBuilder.setMessage("¿Está seguro de marcar el ticket como ATENDIDO?");
+        alertBuilder
+                .setCancelable(true)
+                .setPositiveButton("Atendido", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Ticket ticket = new Ticket();
+                        ticket.set_nroTicket(oTicket.get_nroTicket());
+                        ticket.set_solucion(etSolucionTicket.getText().toString());
+                        ticket.set_observaciones(etObservacionTicket.getText().toString());
+                        ticket.set_ordenServicio(etOrdenServicioTicket.getText().toString());
+                        ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
+                        ticket.set_idEstadoTicket(4);
 
-        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
-        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
+                        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
+                        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
 
-        respuesta.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.code() == 200) {
-                    Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket Atendido", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                    etEstadoTicket.setText(getString(R.string.estadoAtendido));
-                }
-            }
+                        respuesta.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.code() == 200) {
+                                    Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket Atendido", Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                    etEstadoTicket.setText(getString(R.string.estadoAtendido));
+                                }
+                            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-            }
-        });
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alerta = alertBuilder.create();
+        alerta.show();
+
     }
 
     @OnClick(R.id.btnEsperaRepuesto)
     public void esperarRepuesto() {
-        Ticket ticket = new Ticket();
-        ticket.set_nroTicket(oTicket.get_nroTicket());
-        ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
-        ticket.set_idEstadoTicket(6);
 
-        //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        //String sJson = gson.toJson(ticket);
-        //etSolucionTicket.setText(sJson);
-        //Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+        alertBuilder.setTitle(getString(R.string.tituloAlertaConfirmacion));
+        alertBuilder.setMessage("¿Está seguro de marcar el ticket como EN ESPERA DE REPUESTO?");
+        alertBuilder
+                .setCancelable(true)
+                .setPositiveButton("En espera de Repuesto", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Ticket ticket = new Ticket();
+                        ticket.set_nroTicket(oTicket.get_nroTicket());
+                        ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
+                        ticket.set_idEstadoTicket(6);
 
-        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
-        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
+                        //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                        //String sJson = gson.toJson(ticket);
+                        //etSolucionTicket.setText(sJson);
+                        //Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
 
-        respuesta.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.code() == 200) {
-                    Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket En Espera de Repuesto", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                    etEstadoTicket.setText(getString(R.string.estadoEsperaRep));
-                    //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
-                }
-            }
+                        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
+                        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        respuesta.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.code() == 200) {
+                                    Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket En Espera de Repuesto", Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                    etEstadoTicket.setText(getString(R.string.estadoEsperaRep));
+                                    //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
+                                }
+                            }
 
-            }
-        });
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alerta = alertBuilder.create();
+        alerta.show();
+
+
     }
 
     @OnClick(R.id.btnRepuesto)
@@ -285,68 +329,110 @@ public class TicketDetalleFragment extends Fragment {
 
     @OnClick(R.id.btnCerrar)
     public void cerrarTicket(){
-        Ticket ticket = new Ticket();
-        ticket.set_nroTicket(oTicket.get_nroTicket());
-        ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
-        ticket.set_idEstadoTicket(5);
 
-        //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        //String sJson = gson.toJson(ticket);
-        //etSolucionTicket.setText(sJson);
-        //Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+        alertBuilder.setTitle(getString(R.string.tituloAlertaConfirmacion));
+        alertBuilder.setMessage("¿Está seguro de CERRAR el ticket?");
+        alertBuilder
+                .setCancelable(true)
+                .setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Ticket ticket = new Ticket();
+                        ticket.set_nroTicket(oTicket.get_nroTicket());
+                        ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
+                        ticket.set_idEstadoTicket(5);
 
-        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
-        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
+                        //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                        //String sJson = gson.toJson(ticket);
+                        //etSolucionTicket.setText(sJson);
+                        //Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
 
-        respuesta.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.code() == 200) {
-                    Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket Cerrado", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                    etEstadoTicket.setText(getString(R.string.estadoCerrado));
-                    //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
-                }
-            }
+                        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
+                        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        respuesta.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.code() == 200) {
+                                    Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket Cerrado", Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                    etEstadoTicket.setText(getString(R.string.estadoCerrado));
+                                    //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
+                                }
+                            }
 
-            }
-        });
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alerta = alertBuilder.create();
+        alerta.show();
+
     }
 
     @OnClick(R.id.btnAnular)
     public void anularTicket(){
-        Ticket ticket = new Ticket();
-        ticket.set_nroTicket(oTicket.get_nroTicket());
-        ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
-        ticket.set_idEstadoTicket(7);
 
-        //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        //String sJson = gson.toJson(ticket);
-        //etSolucionTicket.setText(sJson);
-        //Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+        alertBuilder.setTitle(getString(R.string.tituloAlertaConfirmacion));
+        alertBuilder.setMessage("¿Está seguro de ANULAR el ticket?");
+        alertBuilder
+                .setCancelable(true)
+                .setPositiveButton("Anular", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Ticket ticket = new Ticket();
+                        ticket.set_nroTicket(oTicket.get_nroTicket());
+                        ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
+                        ticket.set_idEstadoTicket(7);
 
-        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
-        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
+                        //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                        //String sJson = gson.toJson(ticket);
+                        //etSolucionTicket.setText(sJson);
+                        //Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
 
-        respuesta.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.code() == 200) {
-                    Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket Anulado", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                    etEstadoTicket.setText(getString(R.string.estadoAnulado));
-                    //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
-                }
-            }
+                        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
+                        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        respuesta.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.code() == 200) {
+                                    Snackbar snackbar = Snackbar.make(nsvScroll, "Ticket Anulado", Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                    etEstadoTicket.setText(getString(R.string.estadoAnulado));
+                                    //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
+                                }
+                            }
 
-            }
-        });
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alerta = alertBuilder.create();
+        alerta.show();
+
     }
 
     @OnClick(R.id.idbtnVerDireccion)

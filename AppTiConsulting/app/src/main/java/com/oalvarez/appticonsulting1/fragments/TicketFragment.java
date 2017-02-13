@@ -77,6 +77,10 @@ public class TicketFragment extends Fragment {
             sIdUsuario = bundle.getString("idusuario");
             nIdTipoUsuario = bundle.getInt("idtipousuario");
 
+            if (nIdTipoUsuario != 2){
+                btnRegistrarTicket.setVisibility(View.GONE);
+            }
+
             alEstadoTicket = new Listas().listarEstadoTicketDb(nIdTipoUsuario);
 
             ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, alEstadoTicket);

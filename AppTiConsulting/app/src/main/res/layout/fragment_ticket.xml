@@ -33,18 +33,21 @@
             <Spinner
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
+                android:layout_weight="0.8"
                 android:id="@+id/spEstadoTicket"></Spinner>
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:id="@+id/btnRegistrarTicket"
 
-                android:text="@string/registrarticket"/>
 
         </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnRegistrarTicket"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/ic_assignment_black_24dp"
+            android:drawablePadding="5dp"
+            android:text="@string/registrarticket"/>
 
         <Space
             android:layout_width="match_parent"
