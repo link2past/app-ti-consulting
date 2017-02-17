@@ -198,6 +198,20 @@ public class TicketDetalleFragment extends Fragment {
     @OnClick(R.id.btnAtender)
     public void onClick() {
 
+        if (etSolucionTicket.getText().toString().trim().equals("")){
+            Snackbar snackbar = Snackbar.make(nsvScroll, "Debe indicar la solución del ticket", Snackbar.LENGTH_LONG);
+            snackbar.show();
+            etSolucionTicket.requestFocus();
+            return;
+        }
+
+        if (etOrdenServicioTicket.getText().toString().trim().equals("")){
+            Snackbar snackbar = Snackbar.make(nsvScroll, "Debe indicar la orden de servicio del ticket", Snackbar.LENGTH_LONG);
+            snackbar.show();
+            etOrdenServicioTicket.requestFocus();
+            return;
+        }
+
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
         alertBuilder.setTitle(getString(R.string.tituloAlertaConfirmacion));
         alertBuilder.setMessage("¿Está seguro de marcar el ticket como ATENDIDO?");
