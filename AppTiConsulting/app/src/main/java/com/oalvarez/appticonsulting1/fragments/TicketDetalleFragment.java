@@ -142,6 +142,9 @@ public class TicketDetalleFragment extends Fragment {
                         etClienteTicket.setText(oTicket.get_cliente().get_razonSocial());
                         etSedeTicket.setText(oTicket.get_sede().get_nombre());
                         etTituloTicket.setText(oTicket.get_titulo());
+                        etSolucionTicket.setText(oTicket.get_solucion());
+                        etOrdenServicioTicket.setText(oTicket.get_ordenServicio());
+                        etObservacionTicket.setText(oTicket.get_observaciones());
 
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         String sFecha = simpleDateFormat.format(oTicket.get_fechaTicket());
@@ -160,12 +163,12 @@ public class TicketDetalleFragment extends Fragment {
 
         }
 
-        desactivarCampos();
+        desactivarCampos(oTicket.get_idEstadoTicket());
 
         return view;
     }
 
-    private void desactivarCampos() {
+    private void desactivarCampos(int nIdEstadoTicket) {
         etNroTicket.setFocusable(false);
         etNroTicket.setClickable(false);
 
@@ -189,6 +192,15 @@ public class TicketDetalleFragment extends Fragment {
 
         if (nIdTipoUsuario == 3){
             btnAsignar.setVisibility(View.GONE);
+            btnAnular.setVisibility(View.GONE);
+            btnCerrar.setVisibility(View.GONE);
+        }
+
+        if (nIdEstadoTicket == 5){
+            btnAtender.setVisibility(View.GONE);
+            btnRepuesto.setVisibility(View.GONE);
+            btnEsperaRepuesto.setVisibility(View.GONE);
+            btnAtender.setVisibility(View.GONE);
             btnAnular.setVisibility(View.GONE);
             btnCerrar.setVisibility(View.GONE);
         }
