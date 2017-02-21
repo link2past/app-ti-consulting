@@ -98,6 +98,8 @@ public class TicketDetalleFragment extends Fragment {
     Button btnAnular;
     @BindView(R.id.btnCerrar)
     Button btnCerrar;
+    @BindView(R.id.btnAgregarFoto)
+    Button btnAgregarFoto;
 
     private Ticket oTicket;
     int nIdTipoUsuario;
@@ -152,6 +154,8 @@ public class TicketDetalleFragment extends Fragment {
 
                         etDetalleTicket.setText(oTicket.get_detalle());
 
+                        desactivarCampos(oTicket.get_idEstadoTicket());
+
                     }
                 }
 
@@ -163,7 +167,7 @@ public class TicketDetalleFragment extends Fragment {
 
         }
 
-        desactivarCampos(oTicket.get_idEstadoTicket());
+        //desactivarCampos(oTicket.get_idEstadoTicket());
 
         return view;
     }
@@ -190,19 +194,20 @@ public class TicketDetalleFragment extends Fragment {
         etDetalleTicket.setFocusable(false);
         etDetalleTicket.setClickable(false);
 
-        if (nIdTipoUsuario == 3){
+        if (nIdTipoUsuario == 3) {
             btnAsignar.setVisibility(View.GONE);
             btnAnular.setVisibility(View.GONE);
             btnCerrar.setVisibility(View.GONE);
         }
 
-        if (nIdEstadoTicket == 5){
+        if (nIdEstadoTicket == 5) {
             btnAtender.setVisibility(View.GONE);
             btnRepuesto.setVisibility(View.GONE);
             btnEsperaRepuesto.setVisibility(View.GONE);
             btnAtender.setVisibility(View.GONE);
             btnAnular.setVisibility(View.GONE);
             btnCerrar.setVisibility(View.GONE);
+            btnAgregarFoto.setVisibility(View.GONE);
         }
     }
 
@@ -210,14 +215,14 @@ public class TicketDetalleFragment extends Fragment {
     @OnClick(R.id.btnAtender)
     public void onClick() {
 
-        if (etSolucionTicket.getText().toString().trim().equals("")){
+        if (etSolucionTicket.getText().toString().trim().equals("")) {
             Snackbar snackbar = Snackbar.make(nsvScroll, "Debe indicar la solución del ticket", Snackbar.LENGTH_LONG);
             snackbar.show();
             etSolucionTicket.requestFocus();
             return;
         }
 
-        if (etOrdenServicioTicket.getText().toString().trim().equals("")){
+        if (etOrdenServicioTicket.getText().toString().trim().equals("")) {
             Snackbar snackbar = Snackbar.make(nsvScroll, "Debe indicar la orden de servicio del ticket", Snackbar.LENGTH_LONG);
             snackbar.show();
             etOrdenServicioTicket.requestFocus();
@@ -341,7 +346,7 @@ public class TicketDetalleFragment extends Fragment {
     }
 
     @OnClick(R.id.btnAsignar)
-    public void asignarTicket(){
+    public void asignarTicket() {
         Fragment fragment;
         fragment = new AsignarTecnicoFragment();
         Bundle bundleRepuesto = new Bundle();
@@ -354,7 +359,7 @@ public class TicketDetalleFragment extends Fragment {
     }
 
     @OnClick(R.id.btnCerrar)
-    public void cerrarTicket(){
+    public void cerrarTicket() {
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
         alertBuilder.setTitle(getString(R.string.tituloAlertaConfirmacion));
@@ -408,7 +413,7 @@ public class TicketDetalleFragment extends Fragment {
     }
 
     @OnClick(R.id.btnAnular)
-    public void anularTicket(){
+    public void anularTicket() {
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
         alertBuilder.setTitle(getString(R.string.tituloAlertaConfirmacion));
@@ -478,6 +483,19 @@ public class TicketDetalleFragment extends Fragment {
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment).addToBackStack("fragmentDireccion");
+        ft.commit();
+    }
+
+    @OnClick(R.id.btnAgregarFoto)
+    public void agregarFoto(){
+        Fragment fragment;
+        fragment = new TicketArchivoFragment();
+        Bundle bundleRepuesto = new Bundle();
+        bundleRepuesto.putString("nroticket", etNroTicket.getText().toString());
+        fragment.setArguments(bundleRepuesto);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment).addToBackStack("fragment");
         ft.commit();
     }
 

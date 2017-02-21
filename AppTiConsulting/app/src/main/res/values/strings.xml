@@ -26,7 +26,9 @@
 
     <string name="api_map">AIzaSyAHQ1gxeb00CEwpk7JMKHaJYYVCAHCbwq4</string>
     <string name="api_fabric">3bc7c7df773981a35f691f3cd79a9c1a21e6af1a</string>
+
     <string name="default_web_api_url">http://api.ticonsultingsac.com/api/api/</string>
+    <string name="default_ruta_archivos">http://api.ticonsultingsac.com/files/</string>
 
 
     <string name="tituloticket">Título</string>
@@ -85,4 +87,9 @@
     <string name="cerrar">Cerrar</string>
 
     <string name="tituloAlertaConfirmacion">Confirmación</string>
+    <string name="ticketsarchivos">Subir Archivos para el Ticket</string>
+    <string name="subirfoto">Subir Foto Selecionada</string>
+    <string name="archivosasociados">Archivos Asociados</string>
+    <string name="agregarfoto">Agregar Foto</string>
+    <string name="nombrearchivo">Nombre Archivo Asociado</string>
 </resources>
