@@ -8,10 +8,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.oalvarez.appticonsulting1.entidades.SessionManager;
@@ -44,11 +45,13 @@ public class MainActivity extends BaseActivity {
     TextInputLayout tilContrasena;
     @BindView(R.id.btnConfiguracion)
     Button btnConfiguracion;
+    @BindView(R.id.tvVersion)
+    TextView tvVersion;
+    @BindView(R.id.imgLogo)
+    ImageView imgLogo;
 
     private Boolean bLoginCorrecto = false;
     private SessionManager sessionManager;
-
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,12 @@ public class MainActivity extends BaseActivity {
 
         sessionManager = new SessionManager(MainActivity.this);
         //Toast.makeText(MainActivity.this, "User Login Status: " + sessionManager.estaLogeado(), Toast.LENGTH_LONG).show();
+
+        //int versionCode = BuildConfig.VERSION_CODE;
+        String versionName = BuildConfig.VERSION_NAME;
+
+        tvVersion.setText("Versión: " + versionName);
+
 
         if (sessionManager.estaLogeado()) {
 

@@ -92,4 +92,5 @@
     <string name="archivosasociados">Archivos Asociados</string>
     <string name="agregarfoto">Agregar Foto</string>
     <string name="nombrearchivo">Nombre Archivo Asociado</string>
+    <string name="version">App Version</string>
 </resources>

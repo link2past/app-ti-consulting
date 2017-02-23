@@ -26,10 +26,28 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/bienvenida"/>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvTipoUsuario"
-        android:text="@string/tipousuario"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:id="@+id/tvTipoUsuario"
+            android:text="@string/tipousuario"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvVersion"
+            android:text="@string/version"
+            android:gravity="right"/>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

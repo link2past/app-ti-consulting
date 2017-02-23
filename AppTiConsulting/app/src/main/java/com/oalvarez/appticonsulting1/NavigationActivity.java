@@ -65,6 +65,9 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
                 TextView tvTipoUsuario = (TextView)header.findViewById(R.id.tvTipoUsuario);
                 tvTipoUsuario.setText(bundle.getString("tipousuario"));
 
+                TextView tvVersion = (TextView)header.findViewById(R.id.tvVersion);
+                tvVersion.setText(BuildConfig.VERSION_NAME);
+
                 displaySelectedScreen(R.id.navTickets);
             }
 
