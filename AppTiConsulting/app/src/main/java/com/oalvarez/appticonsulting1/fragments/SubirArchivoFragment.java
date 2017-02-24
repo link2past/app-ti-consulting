@@ -159,15 +159,25 @@ public class SubirArchivoFragment extends Fragment {
                 if (opciones[which].equals("Tomar Foto")) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                    filename = getExternalStorageDirectory() + File.separator + "Gesti" + File.separator + "default" + File.separator + "JPEG_" + timestamp + ".jpg";
+                    File carpeta = new File(getExternalStorageDirectory() + File.separator + "Gesti" + File.separator + "default");
+                    Boolean bExisteCarpeta = true;
+                    if (!carpeta.exists()){
+                        bExisteCarpeta = carpeta.mkdirs();
+                    }
 
-                    //File file = new File(android.os.Environment.getExternalStorageDirectory() +File.separator + "Foto.jpg");
-                    File file = new File(filename);
+                    if (bExisteCarpeta){
+                        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                        filename = getExternalStorageDirectory() + File.separator + "Gesti" + File.separator + "default" + File.separator + "JPEG_" + timestamp + ".jpg";
 
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-                    //startActivityForResult(intent, 1);
-                    startActivityForResult(intent, 1);
+                        //File file = new File(android.os.Environment.getExternalStorageDirectory() +File.separator + "Foto.jpg");
+                        File file = new File(filename);
+
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+                        //startActivityForResult(intent, 1);
+                        startActivityForResult(intent, 1);
+                    }
+
+
 
                 } else if (opciones[which].equals("Escoger de la Galería")) {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
