@@ -93,4 +93,7 @@
     <string name="agregarfoto">Agregar Foto</string>
     <string name="nombrearchivo">Nombre Archivo Asociado</string>
     <string name="version">App Version</string>
+    <string name="liquidacionactual">Liquidación Actual</string>
+    <string name="fechaliquidacion">Fecha</string>
+    <string name="saldoliquidacion">Saldo</string>
 </resources>
