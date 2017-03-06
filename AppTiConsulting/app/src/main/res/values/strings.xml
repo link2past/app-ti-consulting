@@ -96,4 +96,7 @@
     <string name="liquidacionactual">Liquidación Actual</string>
     <string name="fechaliquidacion">Fecha</string>
     <string name="saldoliquidacion">Saldo</string>
+    <string name="nroliquidacion">Nro. Liq.:</string>
+    <string name="totalliq">Total:</string>
+    <string name="saldoliq">Saldo:</string>
 </resources>

@@ -6,7 +6,6 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,26 +15,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/liquidacion"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/colorPrimaryDark"/>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/liquidacionactual"/>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rvLiquidaciones"
+            android:scrollbars="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fechaliquidacion"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/saldoliquidacion"/>
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pbListaLiq"
+        android:layout_gravity="bottom|end"
+        android:indeterminateDrawable="@drawable/progress_bar"
+        android:visibility="invisible" />
+
+
 
 </android.support.design.widget.CoordinatorLayout>

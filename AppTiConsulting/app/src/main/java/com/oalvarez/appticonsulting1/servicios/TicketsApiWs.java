@@ -94,4 +94,9 @@ public interface TicketsApiWs {
     @GET("usuariosede/{id}")
     Call<ArrayList<UsuarioSede>> ListarUsuarioSede(@Path("id") int nIdSede);
     //endregion
+
+    //region Liquidacion
+    @GET("liquidacion/{id}")
+    Call<ArrayList<Liquidacion>> ListarLiquidacion(@Path("id") String sIdUsuario);
+    //endregion
 }

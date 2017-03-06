@@ -105,6 +105,9 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
                 break;
             case R.id.navLiquidacion:
                 fragment = new LiquidacionFragment();
+                bundleFragment = new Bundle();
+                bundleFragment.putString("idusuario", sIdUsuario);
+                fragment.setArguments(bundleFragment);
                 toolbar.setTitle(R.string.liquidacion);
                 break;
             case R.id.navCerrarSesion:
