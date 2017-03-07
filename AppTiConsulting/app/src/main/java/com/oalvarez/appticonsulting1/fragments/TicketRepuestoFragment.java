@@ -57,6 +57,7 @@ public class TicketRepuestoFragment extends Fragment {
 
     private ArrayList<TicketDetalle> listaDetalleTicket = new ArrayList<>();
     public TicketDetalleAdapter detalleAdapter;
+    private String sSolucion;
 
     private int nroTicket;
 
@@ -80,6 +81,7 @@ public class TicketRepuestoFragment extends Fragment {
 
         return view;
     }
+
 
     private void listarRepuestos(){
         TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);

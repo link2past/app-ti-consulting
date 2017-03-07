@@ -41,10 +41,11 @@ public class LiquidacionAdapter extends RecyclerView.Adapter<LiquidacionAdapter.
         holder.tvNroLiquidacion.setText(String.valueOf(liquidacion.get_nroLiquidacion()));
         holder.tvTotalLiq.setText(String.valueOf(liquidacion.get_totalAsignado()));
         holder.tvSaldoLiq.setText(String.valueOf(liquidacion.get_saldoLiquidacion()));
+        holder.tvEstadoLiq.setText(liquidacion.get_estadoLiquidacion().get_descripcion());
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String sFecha = simpleDateFormat.format(liquidacion.get_fechaLiquidacion());
-        holder.tvFechaLiquidacion.setText( sFecha);
+        holder.tvFechaLiquidacion.setText(sFecha);
     }
 
     @Override
@@ -62,6 +63,8 @@ public class LiquidacionAdapter extends RecyclerView.Adapter<LiquidacionAdapter.
         TextView tvTotalLiq;
         @BindView(R.id.tvFechaLiquidacion)
         TextView tvFechaLiquidacion;
+        @BindView(R.id.tvEstadoLiq)
+        TextView tvEstadoLiq;
 
         public LiquidacionHolder(View itemView) {
             super(itemView);

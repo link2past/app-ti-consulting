@@ -2,6 +2,7 @@ package com.oalvarez.appticonsulting1.servicios;
 
 import com.oalvarez.appticonsulting1.entidades.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
@@ -96,7 +97,17 @@ public interface TicketsApiWs {
     //endregion
 
     //region Liquidacion
+    @GET("liquidacion/{accion}/{id}")
+    Call<ArrayList<Liquidacion>> ListarLiquidacion(@Path("accion") String sAccion, @Path("id") String sIdUsuario);
+
     @GET("liquidacion/{id}")
-    Call<ArrayList<Liquidacion>> ListarLiquidacion(@Path("id") String sIdUsuario);
+    Call<Liquidacion> ConsultarLiquidacion(@Path("id") int id);
+
+    @GET("liquidaciondet/{id}")
+    Call<ArrayList<LiquidacionDetalle>> ListarLiquidacionDetalle(@Path("id") int id);
+
+    @Headers({"Accept: application/json", "Content-Type: application/json"})
+    @POST("liquidaciondet/{id}")
+    Call<ResponseBody> AgregarDetalleLiquidacion(@Path("id") String id, @Body LiquidacionDetalle liquidacionDetalle);
     //endregion
 }

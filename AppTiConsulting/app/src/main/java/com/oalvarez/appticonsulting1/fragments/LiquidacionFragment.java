@@ -3,6 +3,7 @@ package com.oalvarez.appticonsulting1.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import com.oalvarez.appticonsulting1.R;
 import com.oalvarez.appticonsulting1.adapter.LiquidacionAdapter;
 import com.oalvarez.appticonsulting1.entidades.Liquidacion;
+import com.oalvarez.appticonsulting1.events.ClickListener;
+import com.oalvarez.appticonsulting1.events.RecyclerTouchListener;
 import com.oalvarez.appticonsulting1.servicios.HelperWs;
 import com.oalvarez.appticonsulting1.servicios.TicketsApiWs;
 
@@ -57,7 +60,7 @@ public class LiquidacionFragment extends Fragment {
             sIdUsuario = bundle.getString("idusuario");
 
             TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
-            Call<ArrayList<Liquidacion>> respuesta = ticketsApiWs.ListarLiquidacion(sIdUsuario);
+            Call<ArrayList<Liquidacion>> respuesta = ticketsApiWs.ListarLiquidacion("a", sIdUsuario);
 
             pbListaLiq.setIndeterminate(true);
             pbListaLiq.setVisibility(View.VISIBLE);
@@ -89,4 +92,42 @@ public class LiquidacionFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        rvLiquidaciones.addOnItemTouchListener(new RecyclerTouchListener(
+                getActivity(),
+                rvLiquidaciones,
+                new ClickListener() {
+                    @Override
+                    public void onClick(View view, int position) {
+
+                        Liquidacion liquidacion = new Liquidacion();
+                        liquidacion = listaLiquidacion.get(position);
+
+
+                        Fragment fragment = null;
+
+                        fragment = new LiqDetalleFragment();
+                        Bundle bundleFragment = new Bundle();
+                        bundleFragment.putString("idusuario", sIdUsuario);
+                        bundleFragment.putInt("nroliquidacion", liquidacion.get_nroLiquidacion());
+                        fragment.setArguments(bundleFragment);
+
+                        if (fragment != null) {
+                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            ft.replace(R.id.content_frame, fragment).addToBackStack("fragment");
+                            ft.commit();
+                        }
+
+                    }
+
+                    @Override
+                    public void onLongClick(View view, int position) {
+
+                    }
+                }
+        ));
+    }
 }

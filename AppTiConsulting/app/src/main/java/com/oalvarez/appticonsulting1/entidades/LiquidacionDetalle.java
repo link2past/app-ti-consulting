@@ -15,6 +15,7 @@ public class LiquidacionDetalle {
     private String _lugarFin;
     private Double _importe;
     private int _nroTicket;
+    private String _tipoTransporte;
 
     public int get_nroLiquidacion() {
         return _nroLiquidacion;
@@ -78,5 +79,13 @@ public class LiquidacionDetalle {
 
     public void set_nroTicket(int _nroTicket) {
         this._nroTicket = _nroTicket;
+    }
+
+    public String get_tipoTransporte() {
+        return _tipoTransporte;
+    }
+
+    public void set_tipoTransporte(String _tipoTransporte) {
+        this._tipoTransporte = _tipoTransporte;
     }
 }

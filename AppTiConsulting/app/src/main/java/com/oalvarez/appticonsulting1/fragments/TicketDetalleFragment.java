@@ -103,6 +103,7 @@ public class TicketDetalleFragment extends Fragment {
 
     private Ticket oTicket;
     int nIdTipoUsuario;
+    private String sIdUsuario;
 
     public TicketDetalleFragment() {
         // Required empty public constructor
@@ -118,9 +119,12 @@ public class TicketDetalleFragment extends Fragment {
         final Bundle bundle = this.getArguments();
 
         if (bundle != null) {
+            sIdUsuario = bundle.getString("idusuario");
             int nroTicket = bundle.getInt("nroticket");
             nIdTipoUsuario = bundle.getInt("idtipousuario");
             etNroTicket.setText(String.valueOf(nroTicket));
+
+
 
 
             TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
@@ -338,6 +342,7 @@ public class TicketDetalleFragment extends Fragment {
         fragment = new TicketRepuestoFragment();
         Bundle bundleRepuesto = new Bundle();
         bundleRepuesto.putString("nroticket", etNroTicket.getText().toString());
+        bundleRepuesto.putString("solucion", etSolucionTicket.getText().toString());
         fragment.setArguments(bundleRepuesto);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -371,7 +376,7 @@ public class TicketDetalleFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         Ticket ticket = new Ticket();
                         ticket.set_nroTicket(oTicket.get_nroTicket());
-                        ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
+                        ticket.set_usuarioAsignado(sIdUsuario);
                         ticket.set_idEstadoTicket(5);
 
                         //Gson gson = new GsonBuilder().disableHtmlEscaping().create();

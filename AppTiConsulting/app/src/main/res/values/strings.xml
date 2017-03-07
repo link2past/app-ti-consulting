@@ -96,7 +96,20 @@
     <string name="liquidacionactual">Liquidación Actual</string>
     <string name="fechaliquidacion">Fecha</string>
     <string name="saldoliquidacion">Saldo</string>
-    <string name="nroliquidacion">Nro. Liq.:</string>
-    <string name="totalliq">Total:</string>
-    <string name="saldoliq">Saldo:</string>
+    <string name="nroliquidacion">Número</string>
+    <string name="totalliq">Total</string>
+    <string name="saldoliq">Saldo</string>
+    <string name="saldoinicialliq">Saldo Inicial</string>
+    <string name="montoasignadoliq">Monto Asignado</string>
+    <string name="totalliquidado">Total Liquidado</string>
+    <string name="detalleliq">Detalle Liquidación</string>
+    <string name="liquidaciondetallereg">Registro de Detalle de Liquidación</string>
+    <string name="fechadetliqreg">Fecha de Detalle (dd/mm/yyyy)</string>
+    <string name="motivodetalleliq">Motivo del Detalle</string>
+    <string name="lugariniciodetliq">Lugar de Inicio</string>
+    <string name="lugarfindetliq">Lugar de Fin</string>
+    <string name="importedetliq">Importe</string>
+    <string name="totalasignado">Total Asignado</string>
+
+
 </resources>

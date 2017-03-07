@@ -192,6 +192,7 @@ public class TicketFragment extends Fragment {
 
                         fragment = new TicketDetalleFragment();
                         Bundle bundleFragment = new Bundle();
+                        bundleFragment.putString("idusuario", sIdUsuario);
                         bundleFragment.putInt("nroticket", ticket.get_nroTicket());
                         bundleFragment.putInt("idtipousuario", nIdTipoUsuario);
                         fragment.setArguments(bundleFragment);
@@ -205,6 +206,8 @@ public class TicketFragment extends Fragment {
                             ft.replace(R.id.content_frame, fragment).addToBackStack("fragment");
                             ft.commit();
                         }
+
+
 
 
                         //Toast.makeText(getActivity(), "Ticket: " + ticket.get_titulo(), Toast.LENGTH_SHORT).show();

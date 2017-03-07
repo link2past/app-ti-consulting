@@ -2,7 +2,9 @@ package com.oalvarez.appticonsulting1.util;
 
 import com.oalvarez.appticonsulting1.database.EstadoTicketDb;
 import com.oalvarez.appticonsulting1.database.NivelUrgenciaDb;
+import com.oalvarez.appticonsulting1.database.TransporteDb;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import io.realm.Realm;
@@ -68,6 +70,22 @@ public class Listas {
         }
 
         return tabla;
+    }
+
+    public ArrayList<String> listarTransporteDb(){
+        ArrayList<String> table = new ArrayList<>();
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<TransporteDb> realmResults = null;
+
+        realmResults = realm
+                .where(TransporteDb.class)
+                .findAllSorted("idTransporte", Sort.ASCENDING);
+
+        for(TransporteDb item:realmResults){
+            table.add(item.getDescripcion());
+        }
+
+        return table;
     }
 
 }

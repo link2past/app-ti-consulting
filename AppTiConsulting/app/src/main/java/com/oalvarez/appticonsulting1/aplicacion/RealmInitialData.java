@@ -2,6 +2,7 @@ package com.oalvarez.appticonsulting1.aplicacion;
 
 import com.oalvarez.appticonsulting1.database.EstadoTicketDb;
 import com.oalvarez.appticonsulting1.database.NivelUrgenciaDb;
+import com.oalvarez.appticonsulting1.database.TransporteDb;
 
 import io.realm.Realm;
 
@@ -66,6 +67,28 @@ public class RealmInitialData implements Realm.Transaction {
         nivelUrgenciaDb.setIdNivelUrgencia(5);
         nivelUrgenciaDb.setDescripcion("ALTO");
         realm.insertOrUpdate(nivelUrgenciaDb);
+
+        //Transporte
+        TransporteDb transporteDb = new TransporteDb();
+        transporteDb.setIdTransporte(1);
+        transporteDb.setDescripcion("TAXI");
+        realm.insertOrUpdate(transporteDb);
+
+        transporteDb.setIdTransporte(2);
+        transporteDb.setDescripcion("TRANSPORTE PÚBLICO");
+        realm.insertOrUpdate(transporteDb);
+
+        transporteDb.setIdTransporte(3);
+        transporteDb.setDescripcion("BUS INTERPROVINCIAL");
+        realm.insertOrUpdate(transporteDb);
+
+        transporteDb.setIdTransporte(4);
+        transporteDb.setDescripcion("AVIÓN");
+        realm.insertOrUpdate(transporteDb);
+
+        transporteDb.setIdTransporte(5);
+        transporteDb.setDescripcion("NO DEFINIDO");
+        realm.insertOrUpdate(transporteDb);
     }
 
     @Override
