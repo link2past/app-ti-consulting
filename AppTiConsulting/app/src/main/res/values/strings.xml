@@ -111,5 +111,7 @@
     <string name="importedetliq">Importe</string>
     <string name="totalasignado">Total Asignado</string>
 
+    <string name="serviciogps">Servicio GPS</string>
+
 
 </resources>

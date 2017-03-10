@@ -38,8 +38,9 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="3bc7c7df773981a35f691f3cd79a9c1a21e6af1a" />
-
         <activity android:name="com.oalvarez.appticonsulting1.SettingsActivity"></activity>
+        <service android:name=".gps.GpsService" android:enabled="true" />
+
     </application>
 
 </manifest>

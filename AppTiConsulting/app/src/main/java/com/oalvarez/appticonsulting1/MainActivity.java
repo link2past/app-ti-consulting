@@ -18,6 +18,7 @@ import com.google.gson.GsonBuilder;
 import com.oalvarez.appticonsulting1.entidades.SessionManager;
 import com.oalvarez.appticonsulting1.entidades.Token;
 import com.oalvarez.appticonsulting1.entidades.Usuario;
+import com.oalvarez.appticonsulting1.gps.GpsService;
 import com.oalvarez.appticonsulting1.servicios.HelperWs;
 import com.oalvarez.appticonsulting1.servicios.TicketsApiWs;
 import com.oalvarez.appticonsulting1.util.Encrypt;
@@ -58,6 +59,8 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        //startService(new Intent(this, GpsService.class));
 
         sessionManager = new SessionManager(MainActivity.this);
         //Toast.makeText(MainActivity.this, "User Login Status: " + sessionManager.estaLogeado(), Toast.LENGTH_LONG).show();

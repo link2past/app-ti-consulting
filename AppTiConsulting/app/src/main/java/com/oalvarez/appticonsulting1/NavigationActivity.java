@@ -1,5 +1,6 @@
 package com.oalvarez.appticonsulting1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import com.oalvarez.appticonsulting1.entidades.SessionManager;
 import com.oalvarez.appticonsulting1.fragments.LiquidacionFragment;
 import com.oalvarez.appticonsulting1.fragments.PerfilFragment;
 import com.oalvarez.appticonsulting1.fragments.TicketFragment;
+import com.oalvarez.appticonsulting1.gps.GpsService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +42,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         try{
             //setSupportActionBar(toolbar);
             sessionManager = new SessionManager(NavigationActivity.this);
+            startService(new Intent(this, GpsService.class));
 
             Bundle bundle = getIntent().getExtras();
             if (bundle.getString("idusuario") != null && bundle.getString("nombreusuario") != null
