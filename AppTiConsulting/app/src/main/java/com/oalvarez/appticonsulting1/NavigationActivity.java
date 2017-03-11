@@ -42,7 +42,7 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
         try{
             //setSupportActionBar(toolbar);
             sessionManager = new SessionManager(NavigationActivity.this);
-            startService(new Intent(this, GpsService.class));
+
 
             Bundle bundle = getIntent().getExtras();
             if (bundle.getString("idusuario") != null && bundle.getString("nombreusuario") != null
@@ -50,6 +50,11 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
 
                 sIdUsuario = bundle.getString("idusuario");
                 nIdTipoUsuario = bundle.getInt("idtipousuario");
+
+                if (nIdTipoUsuario == 3){
+                    startService(new Intent(this, GpsService.class));
+                }
+
 
                 DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
                 ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -115,6 +120,11 @@ public class NavigationActivity extends BaseActivity implements NavigationView.O
                 break;
             case R.id.navCerrarSesion:
                 sessionManager.cerrarSesion();
+
+                if (nIdTipoUsuario == 3){
+                    stopService(new Intent(this, GpsService.class));
+                }
+
                 break;
 
         }

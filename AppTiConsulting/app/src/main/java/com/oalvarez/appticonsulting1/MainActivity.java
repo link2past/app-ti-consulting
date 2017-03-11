@@ -74,6 +74,11 @@ public class MainActivity extends BaseActivity {
         if (sessionManager.estaLogeado()) {
 
             Token token = sessionManager.obtenerDatosSesion();
+
+            if (token.get_usuario().get_idTipoUsuario() == 3){
+                startService(new Intent(this, GpsService.class));
+            }
+
             Intent intent = new Intent(MainActivity.this, NavigationActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra("idusuario", token.get_idUsuario());

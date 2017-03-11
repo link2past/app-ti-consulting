@@ -15,6 +15,17 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.oalvarez.appticonsulting1.entidades.SessionManager;
+import com.oalvarez.appticonsulting1.entidades.Token;
+import com.oalvarez.appticonsulting1.entidades.UbicacionGps;
+import com.oalvarez.appticonsulting1.servicios.HelperWs;
+import com.oalvarez.appticonsulting1.servicios.TicketsApiWs;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * Created by oalvarez on 09/03/2017.
  */
@@ -23,8 +34,13 @@ public class GpsService extends Service {
 
     private static final String TAG = "GestiGPS";
     private LocationManager locationManager = null;
-    private static final int LOCATION_INTERVAL = 1000;
-    private static final float LOCATION_DISTANCE= 10f;
+    private static final int LOCATION_INTERVAL = 3000;
+    private static final float LOCATION_DISTANCE= 30f;
+
+    private String idUsuario;
+    private int idTipoUsuario;
+
+    private SessionManager sessionManager;
 
     private class LocationListener implements android.location.LocationListener{
 
@@ -38,9 +54,35 @@ public class GpsService extends Service {
 
         @Override
         public void onLocationChanged(Location location) {
+
+            sessionManager = new SessionManager(getApplicationContext());
+            Token token = sessionManager.obtenerDatosSesion();
+
             Log.e(TAG, "onLocationChanged: " + location);
             mLastLocation.set(location);
             Toast.makeText(getApplicationContext(), String.valueOf(location.getLatitude()), Toast.LENGTH_SHORT);
+
+            UbicacionGps ubicacionGps = new UbicacionGps();
+            ubicacionGps.set_idUsuario(token.get_idUsuario());
+            ubicacionGps.set_latitud(String.valueOf(location.getLatitude()));
+            ubicacionGps.set_longitud(String.valueOf(location.getLongitude()));
+
+            TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getApplicationContext()).create(TicketsApiWs.class);
+            Call<ResponseBody> respuesta = ticketsApiWs.RegistrarUbicacion(ubicacionGps);
+
+            respuesta.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.code()==200) {
+                        Toast.makeText(getApplicationContext(), "Ubicación enviada", Toast.LENGTH_SHORT);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
 
         }
 

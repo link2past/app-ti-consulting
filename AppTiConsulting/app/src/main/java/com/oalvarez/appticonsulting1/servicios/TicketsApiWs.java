@@ -110,4 +110,10 @@ public interface TicketsApiWs {
     @POST("liquidaciondet/{id}")
     Call<ResponseBody> AgregarDetalleLiquidacion(@Path("id") String id, @Body LiquidacionDetalle liquidacionDetalle);
     //endregion
+
+    //region Ubicacion GPS
+    @Headers({"Accept: application/json", "Content-Type: application/json"})
+    @POST("ubicaciongps")
+    Call<ResponseBody> RegistrarUbicacion(@Body UbicacionGps ubicacionGps);
+    //endregion
 }
