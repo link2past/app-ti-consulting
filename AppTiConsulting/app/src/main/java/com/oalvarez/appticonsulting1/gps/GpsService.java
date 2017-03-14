@@ -34,7 +34,7 @@ public class GpsService extends Service {
 
     private static final String TAG = "GestiGPS";
     private LocationManager locationManager = null;
-    private static final int LOCATION_INTERVAL = 3000;
+    private static final int LOCATION_INTERVAL = 300000;
     private static final float LOCATION_DISTANCE= 30f;
 
     private String idUsuario;
