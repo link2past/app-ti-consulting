@@ -100,6 +100,8 @@ public class TicketDetalleFragment extends Fragment {
     Button btnCerrar;
     @BindView(R.id.btnAgregarFoto)
     Button btnAgregarFoto;
+    @BindView(R.id.btnGrabarDatos)
+    Button btnGrabarDatos;
 
     private Ticket oTicket;
     int nIdTipoUsuario;
@@ -123,8 +125,6 @@ public class TicketDetalleFragment extends Fragment {
             int nroTicket = bundle.getInt("nroticket");
             nIdTipoUsuario = bundle.getInt("idtipousuario");
             etNroTicket.setText(String.valueOf(nroTicket));
-
-
 
 
             TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
@@ -212,6 +212,7 @@ public class TicketDetalleFragment extends Fragment {
             btnAnular.setVisibility(View.GONE);
             btnCerrar.setVisibility(View.GONE);
             btnAgregarFoto.setVisibility(View.GONE);
+            btnGrabarDatos.setVisibility(View.GONE);
         }
     }
 
@@ -356,6 +357,7 @@ public class TicketDetalleFragment extends Fragment {
         fragment = new AsignarTecnicoFragment();
         Bundle bundleRepuesto = new Bundle();
         bundleRepuesto.putString("nroticket", etNroTicket.getText().toString());
+        bundleRepuesto.putString("idusuario", sIdUsuario);
         fragment.setArguments(bundleRepuesto);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -492,7 +494,7 @@ public class TicketDetalleFragment extends Fragment {
     }
 
     @OnClick(R.id.btnAgregarFoto)
-    public void agregarFoto(){
+    public void agregarFoto() {
         Fragment fragment;
         fragment = new TicketArchivoFragment();
         Bundle bundleRepuesto = new Bundle();
@@ -502,6 +504,60 @@ public class TicketDetalleFragment extends Fragment {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment).addToBackStack("fragment");
         ft.commit();
+    }
+
+    @OnClick(R.id.btnGrabarDatos)
+    public void grabarDatos(){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+        alertBuilder.setTitle(getString(R.string.tituloAlertaConfirmacion));
+        alertBuilder.setMessage("¿Está seguro de grabar los datos ingresados?");
+        alertBuilder
+                .setCancelable(true)
+                .setPositiveButton("Grabar Datos", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Ticket ticket = new Ticket();
+                        ticket.set_nroTicket(oTicket.get_nroTicket());
+                        ticket.set_solucion(etSolucionTicket.getText().toString());
+                        ticket.set_observaciones(etObservacionTicket.getText().toString());
+                        ticket.set_ordenServicio(etOrdenServicioTicket.getText().toString());
+                        ticket.set_usuarioAsignado(oTicket.get_usuarioAsignado());
+                        ticket.set_idEstadoTicket(1000);
+
+                        //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                        //String sJson = gson.toJson(ticket);
+                        //etSolucionTicket.setText(sJson);
+                        //Toast.makeText(getActivity(), sJson, Toast.LENGTH_SHORT).show();
+
+                        TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
+                        Call<ResponseBody> respuesta = ticketsApiWs.AtenderTicket(ticket);
+
+                        respuesta.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.code() == 200) {
+                                    Snackbar snackbar = Snackbar.make(nsvScroll, "Se grabaron los datos ingresados", Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                    //Toast.makeText(getActivity(), "Ticket Atendido", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alerta = alertBuilder.create();
+        alerta.show();
     }
 
     @Override
@@ -515,6 +571,6 @@ public class TicketDetalleFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
     }
+
 }

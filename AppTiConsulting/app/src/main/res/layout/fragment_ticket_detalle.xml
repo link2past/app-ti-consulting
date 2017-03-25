@@ -261,11 +261,29 @@
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
-                <Button
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/btnAtender"
-                    android:text="@string/atendido"/>
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    android:padding="2dp">
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnGrabarDatos"
+                        android:text="@string/grabar"/>
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnAtender"
+                        android:text="@string/atendido"/>
+                </LinearLayout>
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"

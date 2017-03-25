@@ -49,6 +49,7 @@ public class AsignarTecnicoFragment extends Fragment {
     private ArrayList<Usuario> listaUsuarioBusqueda;
     private ListaUsuarioAdapter adapter;
     private int nNroTicket;
+    private String sIdUsuario;
 
 
     public AsignarTecnicoFragment() {
@@ -67,6 +68,7 @@ public class AsignarTecnicoFragment extends Fragment {
         final Bundle bundle = this.getArguments();
         if (bundle != null){
             nNroTicket = Integer.parseInt(bundle.getString("nroticket"));
+            sIdUsuario = bundle.getString("idusuario");
         }
         return view;
     }
@@ -96,7 +98,7 @@ public class AsignarTecnicoFragment extends Fragment {
                                         Ticket ticket = new Ticket();
                                         ticket.set_nroTicket(nNroTicket);
                                         ticket.set_idUsuarioAsignado(usuario.get_usuario());
-                                        ticket.set_idUsuario("JCACERES");
+                                        ticket.set_idUsuario(sIdUsuario);
                                         ticket.set_idEstadoTicket(2);
 
                                         TicketsApiWs ticketsApiWs = HelperWs.getConfiguration(getActivity()).create(TicketsApiWs.class);
